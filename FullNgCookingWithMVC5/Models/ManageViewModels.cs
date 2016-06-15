@@ -58,7 +58,7 @@ namespace FullNgCookingWithMVC5.Models
         public string ConfirmPassword { get; set; }
     }
 
-    public class AddPhoneNumberViewModel
+    public class AddPhoneNumberViewModel 
     {
         [Required]
         [Phone]
