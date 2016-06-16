@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace FullNgCookingWithMVC5.Models
@@ -58,12 +59,45 @@ namespace FullNgCookingWithMVC5.Models
         [Display(Name = "Mot de passe")]
         public string Password { get; set; }
 
-        [Display(Name = "Mémoriser le mot de passe ?")]
+        [Display(Name = "Mémoriser le mot de passe ?")] 
         public bool RememberMe { get; set; }
     }
 
     public class RegisterViewModel
     {
+        [Required]
+        [StringLength(30, ErrorMessage = "La chaîne {0} doit comporter au moins {2} caractères.", MinimumLength = 3)]
+        [Display(Name = "Nom")]
+        public string FirstName { get; set; }
+        [Required]
+        [StringLength(30, ErrorMessage = "La chaîne {0} doit comporter au moins {2} caractères.", MinimumLength = 3)]
+        [Display(Name = "Prénom")]
+        public string Surname { get; set; } 
+
+        [Required]
+        [StringLength(20, ErrorMessage = "La chaîne {0} doit comporter au moins {2} caractères.", MinimumLength = 3)]
+        [Display(Name = "Ville")]
+        public string City { get; set; }
+
+        [Required] 
+        [StringLength(2048, ErrorMessage = "La chaîne {0} doit comporter au moins {2} caractères.", MinimumLength = 10)]
+        [Display(Name = "Bio")]  
+        public string Bio { get; set; }
+        [Display(Name = "Date de naissance")]
+        [Required]
+        [DataType(DataType.Date)] 
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]  
+        public DateTime BirthDate { get; set; }
+
+        [Required]
+        [Range(1, 3, ErrorMessage = "{0} doit être entre {2} et {1}")]  
+        [Display(Name = "Niveau")]
+        public int Level { get; set; }
+
+        [DataType(DataType.Upload)] 
+        [Display(Name = "Photo")] 
+        public byte[] Picture { get; set; }    
+
         [Required]
         [EmailAddress]
         [Display(Name = "Courrier électronique")]
