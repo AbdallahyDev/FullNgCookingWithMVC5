@@ -154,23 +154,22 @@ namespace FullNgCookingWithMVC5.Controllers
             {
                 //var employeeViewModelObject = Mapper.Map<Employee, EmployeeViewModel>(employeeObject);
                 var newUser = Mapper.Map<NgCookingUser>(model);
+                newUser.UserName = newUser.Email; 
                 if (image != null) 
                 {
-                    newUser.Picture = new byte[image.ContentLength];  
-                }
-                //HttpPostedFileBase upload = ((HttpPostedFileBase)model.Picture); 
-                // var user = new NgCookingUser { UserName = model.Email, Email = model.Email }; 
-                var result = await UserManager.CreateAsync(newUser, model.Password); 
+                    newUser.Picture = new byte[image.ContentLength];
+                    image.InputStream.Read(newUser.Picture, 0, image.ContentLength);     
+                }  
+                var result = await UserManager.CreateAsync(newUser, model.Password);  
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(newUser, isPersistent: false, rememberBrowser: false);
+                    await SignInManager.SignInAsync(newUser, isPersistent: false, rememberBrowser: false); 
 
                     // Pour plus d'informations sur l'activation de la confirmation du compte et la réinitialisation du mot de passe, consultez http://go.microsoft.com/fwlink/?LinkID=320771
                     // Envoyer un message électronique avec ce lien
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirmez votre compte", "Confirmez votre compte en cliquant <a href=\"" + callbackUrl + "\">ici</a>");
-
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(newUser.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = newUser.Id, code = code }, protocol: Request.Url.Scheme); 
+                    await UserManager.SendEmailAsync(newUser.Id, "Confirmez votre compte", "Confirmez votre compte en cliquant <a href=\"" + callbackUrl + "\">ici</a>"); 
                     return RedirectToAction("Index", "Home"); 
                 }
                 AddErrors(result);

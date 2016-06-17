@@ -87,7 +87,7 @@ namespace FullNgCookingWithMVC5.Models
         [Required]
         [DataType(DataType.Date)] 
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]  
-        public DateTime BirthDate { get; set; }
+        public DateTime Birth { get; set; } 
 
         [Required]
         [Range(1, 3, ErrorMessage = "{0} doit être entre {2} et {1}")]  

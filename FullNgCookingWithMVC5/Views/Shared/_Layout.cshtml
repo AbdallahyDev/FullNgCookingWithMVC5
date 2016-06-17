@@ -5,30 +5,49 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Mon application ASP.NET</title>
-    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/css/reset.css")
+    @Styles.Render("~/Content/css/style.css")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar ">
         <div class="container">
-            <div class="navbar-header">
+            <div class="navbar-header"> 
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span> 
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Nom d'application", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    <span class="icon-bar"></span>  
+                </button> 
+                
+                <div class="row">
+                    <div class="col-xs-12">
+                        <a href="/" class="logo">
+                            <img src="img/logo_header.png" alt="">
+                        </a>
+                        <div class="desc">
+                            <p>Partagez vos meilleures recettes avec<br />la communauté NgCooking</p>
+                            <p><a class="link" href="home.html"><strong></strong></a></p>
+                        </div>
+                    </div>
+                </div>
+            <button type="button" id="mobile-menu-btn">
+                <i class="glyphicon glyphicon-menu-hamburger"></i>
+            </button>
+                <!--@Html.ActionLink("Nom d'application", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })-->
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
-                    <li>@Html.ActionLink("À propos de", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
+            <div class="row col-md-3">
+                <div class="navbar-collapse collapse ">
+                    <ul class="nav-pills nav-stacked">
+                        <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Recettes", "Recette", "Recette")</li>
+                        <li>@Html.ActionLink("Ingredients", "Ingredient", "Ingredient")</li>
+                        <li>@Html.ActionLink("Communauté", "communauty", "Communauty")</li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
             </div>
-        </div>
     </div>
     <div class="container body-content">
         @RenderBody()

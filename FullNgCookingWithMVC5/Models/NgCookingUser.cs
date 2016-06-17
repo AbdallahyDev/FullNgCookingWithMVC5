@@ -16,7 +16,7 @@ namespace FullNgCookingWithMVC5.Models
         public int Level { get; set; }
         public Byte[] Picture { get; set; }
         public string City { get; set; }
-        public DateTime BirthDate { get; set; }    
+        public DateTime Birth { get; set; }     
         public string Bio { get; set; }  
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<NgCookingUser> manager) 
         {
