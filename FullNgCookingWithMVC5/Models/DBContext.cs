@@ -17,6 +17,6 @@ namespace FullNgCookingWithMVC5.Models
         {
             return new ApplicationDbContext(); 
         }
-    } 
+    }  
 }
     

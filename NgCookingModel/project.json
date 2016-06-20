@@ -1,0 +1,14 @@
+{
+  "version": "1.0.0-*",
+  "description": "NgCookingModel Class Library",
+  "authors": [ "C17 Developer" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "frameworks": {
+    "net451": { }
+  },
+  "dependencies": {
+    "EntityFramework": "6.1.3"
+  }
+}

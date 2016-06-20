@@ -4,23 +4,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Mon application ASP.NET</title>
-    @Styles.Render("~/Content/css/reset.css")
-    @Styles.Render("~/Content/css/style.css")
-    @Scripts.Render("~/bundles/modernizr")
+    <title>@ViewBag.Title - NgCooking</title>
+    @*@Styles.Render("~/Content/css/reset.css")*@
+    @Styles.Render("~/Content/css/style.css") 
+    @*@Scripts.Render("~/bundles/modernizr")*@
 
 </head>
-<body>
-    <div class="navbar ">
-        <div class="container">
-            <div class="navbar-header"> 
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span> 
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>  
-                </button> 
-                
+<body>  
+    <div id="wrapper">
+        <header id="header">
+            <div class="container">
                 <div class="row">
                     <div class="col-xs-12">
                         <a href="/" class="logo">
@@ -28,37 +21,97 @@
                         </a>
                         <div class="desc">
                             <p>Partagez vos meilleures recettes avec<br />la communauté NgCooking</p>
-                            <p><a class="link" href="home.html"><strong></strong></a></p>
+                            <p><a class="link" href="home.html"><strong>245 recettes</strong> à découvrir !</a></p>
                         </div>
                     </div>
                 </div>
+            </div>
             <button type="button" id="mobile-menu-btn">
                 <i class="glyphicon glyphicon-menu-hamburger"></i>
             </button>
-                <!--@Html.ActionLink("Nom d'application", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })-->
-            </div>
-            <div class="row col-md-3">
-                <div class="navbar-collapse collapse ">
-                    <ul class="nav-pills nav-stacked">
-                        <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
-                        <li>@Html.ActionLink("Recettes", "Recette", "Recette")</li>
-                        <li>@Html.ActionLink("Ingredients", "Ingredient", "Ingredient")</li>
-                        <li>@Html.ActionLink("Communauté", "communauty", "Communauty")</li>
-                    </ul>
-                    @Html.Partial("_LoginPartial")
+        </header>
+
+        <!--@Html.ActionLink("Nom d'application", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })-->
+        <main id="main">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3" id="col-nav">
+                        <button type="button" id="mobile-close-btn">
+                            <i class="glyphicon glyphicon-remove"></i>
+                        </button>
+                        <nav id="nav">
+                            <ul class="menu">
+                                <li class="page_hom active">
+                                    @Html.ActionLink("Accueil", "Index", "Home")
+                                </li>
+                                <li class="page_rec">
+                                    @Html.ActionLink("Recettes", "Recette", "Recette")
+                                </li>
+                                <li class="page_ing"> 
+                                    @Html.ActionLink("Ingredients", "Ingredient", "Ingredient")
+                                </li>
+                                <li class="page_com">
+                                    @Html.ActionLink("Communauté", "communauty", "Communauty")
+                                </li> 
+                            </ul> 
+                            <div class="account-area">
+                                <button type="button" class="button connect" data-popin-open="connect_popin"><span class="icon"></span>Connexion</button>
+                                <a href="communaute_details.html" class="button account"><span class="icon"></span>Mon profil</a>
+                                <button type="button" class="button deconnect"><span class="glyphicon glyphicon-off"></span>Deconnexion</button>  
+                                <span class="button connect" > @Html.ActionLink("Inscription", "Register", "Account")</span>       
+                            </div>
+                        </nav>
+                    </div>
+
+
+                    @RenderBody()
+
                 </div>
             </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </main>
+        <footer id="footer">
+            <div class="container">
+                <div class="row cuisto-img-wrap">
+                    <div class="hidden-xs col-sm-3">
+                        <div class="cuisto-img"></div>
+                    </div>
+                    <div class="col-xs-12 col-sm-9">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse optio repellat temporibus molestiae ducimus quibusdam eum maiores voluptatum sapiente reprehenderit. Est, modi, tenetur. Tempora perferendis eveniet unde numquam cupiditate nam?</p>
+                        <div class="hr"></div>
+                        <p class="copyright">Copyright @@ngcooking 2015-2016</p>
+                    </div>
+                </div>
+            </div>
         </footer>
+
+
+        @Scripts.Render("~/bundles/jquery")
+        @*@Scripts.Render("~/bundles/bootstrap")*@
+        @RenderSection("scripts", required: false)
+    </div> 
+
+    <div class="popin" data-popin="connect_popin">
+        <div class="popin-content">
+            <div class="popin-scroll">
+                <p class="popin-title">Connexion</p>
+                <form action="#">
+                    <p>
+                        <label for="co_user" class="fwb">Identifiant (email)</label>
+                        <input id="co_user" class="wide" type="text" />
+                    </p>
+                    <p>
+                        <label for="co_pwd" class="fwb">Mot de passe</label>
+                        <input id="co_pwd" class="wide" type="text" />
+                    </p>
+                    <p class="ac nm mt2">
+                        <button type="button" class="btn btn_big btn_color1"><span class="glyphicon glyphicon-ok"></span><span class="fwb uc">Valider</span></button>
+                    </p>
+                </form>
+            </div>
+            <button class="close popin-close"><span class="glyphicon glyphicon-remove"></span></button>
+        </div>
+        <div class="popin-backlayer"></div>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
 </body>
 </html>
