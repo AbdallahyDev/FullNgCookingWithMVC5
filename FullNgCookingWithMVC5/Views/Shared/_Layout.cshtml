@@ -17,7 +17,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <a href="/" class="logo">
-                            <img src="img/logo_header.png" alt="">
+                            <img src="~/img/logo_header.png" alt="">
                         </a>
                         <div class="desc">
                             <p>Partagez vos meilleures recettes avec<br />la communauté NgCooking</p>
@@ -55,10 +55,14 @@
                                 </li> 
                             </ul> 
                             <div class="account-area">
-                                <button type="button" class="button connect" data-popin-open="connect_popin"><span class="icon"></span>Connexion</button>
+                                @if (true)
+                                {
+                                    Html.RenderPartial("~/Views/Shared/_LoginPartial.cshtml"); 
+                                } 
+                                @*<button type="button" class="button connect" data-popin-open="connect_popin"><span class="icon"></span>Connexion</button>
                                 <a href="communaute_details.html" class="button account"><span class="icon"></span>Mon profil</a>
                                 <button type="button" class="button deconnect"><span class="glyphicon glyphicon-off"></span>Deconnexion</button>  
-                                <span class="button connect" > @Html.ActionLink("Inscription", "Register", "Account")</span>       
+                                <span class="button connect" > @Html.ActionLink("Inscription", "Register", "Account")</span>*@       
                             </div>
                         </nav>
                     </div>

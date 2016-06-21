@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using System;
 
 namespace FullNgCookingWithMVC5.Models
 {
@@ -12,11 +13,18 @@ namespace FullNgCookingWithMVC5.Models
         public string PhoneNumber { get; set; }
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
+        public string FirstName { get; set; }
+        public string SurName { get; set; }
+        public int Level { get; set; }
+        public string Bio { get; set; }
+        public DateTime Birth { get; set; }
+        public string City { get; set; }
+        public Byte[] Picture { get; set; } 
     }
 
     public class ManageLoginsViewModel
     {
-        public IList<UserLoginInfo> CurrentLogins { get; set; }
+        public IList<UserLoginInfo> CurrentLogins { get; set; } 
         public IList<AuthenticationDescription> OtherLogins { get; set; }
     }
 

@@ -83,7 +83,7 @@ namespace FullNgCookingWithMVC5.Models
         [StringLength(2048, ErrorMessage = "La chaîne {0} doit comporter au moins {2} caractères.", MinimumLength = 10)]
         [Display(Name = "Bio")]  
         public string Bio { get; set; }
-        [Display(Name = "Date de naissance")]
+        [Display(Name = "Naissance")]
         [Required]
         [DataType(DataType.Date)] 
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]  
@@ -100,7 +100,7 @@ namespace FullNgCookingWithMVC5.Models
 
         [Required]
         [EmailAddress]
-        [Display(Name = "Courrier électronique")]
+        [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Required]
