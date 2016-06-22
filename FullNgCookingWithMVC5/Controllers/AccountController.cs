@@ -10,6 +10,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using FullNgCookingWithMVC5.Models;
 using AutoMapper;
+using System.Net;
+using System.Net.Http;
 
 namespace FullNgCookingWithMVC5.Controllers
 {
@@ -140,7 +142,7 @@ namespace FullNgCookingWithMVC5.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            return View();  
         }
 
         //
@@ -152,14 +154,17 @@ namespace FullNgCookingWithMVC5.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var employeeViewModelObject = Mapper.Map<Employee, EmployeeViewModel>(employeeObject);
                 var newUser = Mapper.Map<NgCookingUser>(model);
                 newUser.UserName = newUser.Email; 
                 if (image != null) 
                 {
                     newUser.Picture = new byte[image.ContentLength];
                     image.InputStream.Read(newUser.Picture, 0, image.ContentLength);     
-                }  
+                }
+                #region Post data using WebAPI
+                //HttpClient client = new System.Net.Http.HttpClient();
+                //var response = client.PostAsJsonAsync("http://localhost:57599/api/Account/Register", newUser).Result;
+                #endregion
                 var result = await UserManager.CreateAsync(newUser, model.Password);  
                 if (result.Succeeded)
                 {

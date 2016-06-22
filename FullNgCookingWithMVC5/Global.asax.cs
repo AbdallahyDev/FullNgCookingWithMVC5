@@ -2,6 +2,7 @@
 using FullNgCookingWithMVC5.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -19,6 +20,7 @@ namespace FullNgCookingWithMVC5
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutoMapperWebConfiguration.Configure();
+            //var container = new UnityContainer();
         }
     }
     public static class AutoMapperWebConfiguration
@@ -27,36 +29,15 @@ namespace FullNgCookingWithMVC5
         {
             Mapper.Initialize(config =>
             {
-                //config.AddProfile(new DomainToViewModelMappingProfile()); 
                 config.CreateMap<RegisterViewModel, NgCookingUser>(); 
-                config.CreateMap<NgCookingUser, RegisterViewModel>(); 
+                config.CreateMap<NgCookingUser, RegisterViewModel>();  
+                config.CreateMap<NgCookingUser, IndexViewModel>();   
+
             });
-        }
-    } 
-
-    public class DomainToViewModelMappingProfile : Profile
-    {
-        public override string ProfileName
-        {
-            get { return "DomainToViewModelMappings"; }
-        }
-
-        protected override void Configure()
-        {
-            //Mapper.CreateMap<NgCookingUser, RegisterViewModel>();
-        }
-    }
-    public class ViewModelToDomainMappingProfile : Profile
-    {
-        public override string ProfileName
-        {
-            get { return "ViewModelToDomainMappings"; }
-        }
-
-        protected override void Configure()
-        {
-            //Mapper.CreateMap<RegisterViewModel, NgCookingUser>();
-        }
+           
+            //Register the Repository in the Unity Container
+            //container.RegisterType<IRepository<EmployeeInfo, int>, EmployeeInfoRepository>();
+        } 
     }
 
 }

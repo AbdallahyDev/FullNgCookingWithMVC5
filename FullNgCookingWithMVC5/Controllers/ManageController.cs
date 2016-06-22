@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using FullNgCookingWithMVC5.Models;
+using AutoMapper;
 
 namespace FullNgCookingWithMVC5.Controllers
 {
@@ -31,9 +32,9 @@ namespace FullNgCookingWithMVC5.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -48,7 +49,7 @@ namespace FullNgCookingWithMVC5.Controllers
                 _userManager = value;
             }
         }
-         
+
         //
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
@@ -63,23 +64,26 @@ namespace FullNgCookingWithMVC5.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
+            #region get data by calling webAPI
+            //using (var client = new WebClient())
+            //{
+            //    client.Headers.Add("content-type", "application/json");//ManageInfo
+            //    string response = client.DownloadString("http://localhost:57599/api/values");
+
+            //}
+            #endregion
             var currentUser = UserManager.FindById(userId);
-            var model = new IndexViewModel
-            {
-                HasPassword = HasPassword(),
-                PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
-                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
-                Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
-                Bio = currentUser.Bio,
-                Birth = currentUser.Birth,
-                City = currentUser.City,
-                FirstName = currentUser.Firstname,
-                SurName = currentUser.Surname,
-                Level = currentUser.Level,
-                Picture = currentUser.Picture
-            };
-            return View(model); 
+            var model = Mapper.Map<IndexViewModel>(currentUser);
+
+            #region Other properties
+            model.HasPassword = HasPassword();
+            model.PhoneNumber = await UserManager.GetPhoneNumberAsync(userId);
+            model.TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId);
+            model.Logins = await UserManager.GetLoginsAsync(userId);
+            model.BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId);
+            #endregion
+
+            return View(model);
         }
 
         //
@@ -235,7 +239,7 @@ namespace FullNgCookingWithMVC5.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model); 
+                return View(model);
             }
             var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
             if (result.Succeeded)
@@ -340,7 +344,7 @@ namespace FullNgCookingWithMVC5.Controllers
             base.Dispose(disposing);
         }
 
-#region Programmes d'assistance
+        #region Programmes d'assistance
         // Utilisé pour la protection XSRF lors de l'ajout de connexions externes
         private const string XsrfKey = "XsrfId";
 
@@ -391,6 +395,6 @@ namespace FullNgCookingWithMVC5.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }
