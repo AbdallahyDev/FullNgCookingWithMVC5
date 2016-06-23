@@ -15,52 +15,14 @@
                             <div class="row">
                                 <div class="col-vxs-12 col-xs-6 col-sm-5">
                                     <div class="avatar-wrap">
-                                        @{
-                                            #region Converting the picture to the right form
-                                            var base64 = Convert.ToBase64String(Model.Picture);
-                                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                                            #endregion
-                                        }
-                                        <img class="avatar" src="@imgSrc" alt="@Model.SurName"> 
+                                        @DisplayPicHelper.DisplayPicture(Model.Picture, Model.SurName) 
                                     </div> 
                                 </div>
                                 <div class="col-vxs-12 col-xs-6 col-sm-7">
                                     <div class="infos">
                                         <h1 class="name">@Model.FirstName @Model.SurName</h1>
-                                        <p class="level">
-                                            <span class="stars">
-                                                @{
-                                                    for (var i = 0; i < Model.Level; i++)
-                                                    {
-                                                        <span class="glyphicon glyphicon-star"></span>
-                                                    }
-                                                }  
-                                            </span>
-                                                @{
-                                                    #region Determination off level nature
-                                                    string level = "";
-                                                    switch (Model.Level)
-                                                    {
-
-                                                        case 3:
-                                                            level = "Expert";
-                                                            break;
-                                                        case 2:
-                                                            level = "Confirmé";
-                                                            break;
-                                                        case 1:
-                                                            level = "Novice";
-                                                            break;
-                                                        default:
-                                                            break;
-                                                    }
-                                                    #endregion
-
-                                                 }
-                                                <span class="status">@level</span>
-                                        </p> 
-                                        
-                                        <p class="city"><span class="fwb">Ville : </span>@Model.City</p>
+                                        @DisplayLevelHelper.DisplayLevel(Model.Level)
+                                        <p class="city"><span class="fwb">Ville : </span>@Model.City</p> 
                                         @{
                                             #region Calcul of age
                                             DateTime today = DateTime.Today;
@@ -108,28 +70,13 @@
                         <hr />
                         <br />
                     </div>
-                    @using Microsoft.AspNet.Identity
-                    @if (Request.IsAuthenticated)
-                    {
-                        <section class="section newrecette">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <p class="c">Vous en avez sous la toque ?!</p>
-                                    <p class="b">
-                                        <a href="recettes_new.html" class="btn btn_color1"><span class="glyphicon glyphicon-plus-sign"></span><span>Créez une nouvelle recette</span></a>
-                                    </p>
-                                </div>
-                            </div>
-                        </section> 
-                    }
-                   
-
+                    @CreateNewRecetteHelper.CreateNewRecette()
                     <section class="section">
-                        <h2 class="title">~ Les recettes de @Model.SurName ~</h2>
+                        <h2 class="title">~ Les recettes de @Model.SurName~</h2>
                         <div class="recettes row">
                             <div class="col-xs-6 col-sm-3 recette">
                                 <a href="recettes_details.html">
-                                    <img src="~/img/recettes/tajine-de-poulet.jpg" alt="Le tajine de ta maman">
+                                    <img src="img/recettes/tajine-de-poulet.jpg" alt="Le tajine de ta maman">
                                     <div class="top" title="note : 3,2/5">
                                         <span class="note">
                                             <span class="glyphicon glyphicon-heart"></span>
@@ -137,14 +84,14 @@
                                             <span class="glyphicon glyphicon-heart"></span>
                                         </span>
                                     </div>
-                                    <div class="bot"> 
+                                    <div class="bot">
                                         <p class="name">Tajine de poulet</p>
                                     </div>
                                 </a>
                             </div>
                             <div class="col-xs-6 col-sm-3 recette">
                                 <a href="recettes_details.html">
-                                    <img src="~/img/recettes/tarte-citron-meringue.jpg" alt="Tarte citron meringué">
+                                    <img src="img/recettes/tarte-citron-meringue.jpg" alt="Tarte citron meringué">
                                     <div class="top" title="note : 4,7/5">
                                         <span class="note">
                                             <span class="glyphicon glyphicon-heart"></span>
@@ -161,7 +108,7 @@
                             </div>
                             <div class="col-xs-6 col-sm-3 recette">
                                 <a href="recettes_details.html">
-                                    <img src="~/img/recettes/salade-de-fruit-granite.jpg" alt="Salade de fruits au granité citron">
+                                    <img src="img/recettes/salade-de-fruit-granite.jpg" alt="Salade de fruits au granité citron">
                                     <div class="top" title="note : 2,4/5">
                                         <span class="note">
                                             <span class="glyphicon glyphicon-heart"></span>
@@ -175,6 +122,7 @@
                             </div>
                         </div>
                     </section>
+                    <p>
                         @*
                                 <dt>Connexions externes :</dt>
                             <dd>
@@ -244,7 +192,7 @@
                             }*@
                         @*</dd>*@
                     
-                       
+                       </p>
                 </div>
             </div> 
         </section>

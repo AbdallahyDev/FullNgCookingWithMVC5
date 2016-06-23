@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using FullNgCookingWithMVC5.Models;
+using Models.Users;
 
 namespace FullNgCookingWithMVC5
 {
@@ -42,7 +43,7 @@ namespace FullNgCookingWithMVC5
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
         {
-            var manager = new ApplicationUserManager(new UserStore<NgCookingUser>(context.Get<ApplicationDbContext>()));
+            var manager = new ApplicationUserManager(new UserStore<NgCookingUser>(context.Get<NgCookingDbContext>()));
             // Configurer la logique de validation pour les noms d'utilisateur
             manager.UserValidator = new UserValidator<NgCookingUser>(manager)
             {

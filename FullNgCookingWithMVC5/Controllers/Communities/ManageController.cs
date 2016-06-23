@@ -62,7 +62,6 @@ namespace FullNgCookingWithMVC5.Controllers
                 : message == ManageMessageId.AddPhoneSuccess ? "Votre numéro de téléphone a été ajouté."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Votre numéro de téléphone a été supprimé."
                 : "";
-
             var userId = User.Identity.GetUserId();
             #region get data by calling webAPI
             //using (var client = new WebClient())

@@ -1,0 +1,41 @@
+﻿@helper DisplayLevel(int levelValue)
+{
+    <p class="level">
+        <span class="stars">
+            @{
+                for (var i = 0; i < levelValue; i++)
+                {
+                    <span class="glyphicon glyphicon-star"></span>
+                }
+            }
+        </span>
+        @{
+
+            #region Determination off level nature
+
+            string level = "";
+
+            switch (levelValue)
+
+            {
+                case 3:
+                    level = "Expert"; 
+                    break;
+                case 2:
+                    level = "Confirmé";
+                    break;
+                case 1:
+                    level = "Novice";
+                    break;
+                default:
+                    break;
+            }
+
+            #endregion
+
+        }
+        <span class="status">@level</span> 
+    </p>
+} 
+
+

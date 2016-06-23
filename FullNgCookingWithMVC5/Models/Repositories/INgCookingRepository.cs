@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace NgCookingModel.Repositories
+namespace Models.Repositories
 {
     interface IRepository<T> where T : class 
     {

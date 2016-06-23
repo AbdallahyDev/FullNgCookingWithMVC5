@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using FullNgCookingWithMVC5.Models;
+using Models.Users;
 
 namespace FullNgCookingWithMVC5
 {
@@ -15,16 +16,16 @@ namespace FullNgCookingWithMVC5
         public void ConfigureAuth(IAppBuilder app)
         {
             // Configurer le contexte de base de données, le gestionnaire des utilisateurs et le gestionnaire des connexions pour utiliser une instance unique par demande
-            app.CreatePerOwinContext(ApplicationDbContext.Create);
+            app.CreatePerOwinContext(NgCookingDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
-            app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
+            app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create); 
 
             // Autoriser l’application à utiliser un cookie pour stocker des informations pour l’utilisateur connecté
             // et pour utiliser un cookie à des fins de stockage temporaire des informations sur la connexion utilisateur avec un fournisseur de connexion tiers
             // Configurer le cookie de connexion
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
-                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie, 
                 LoginPath = new PathString("/Account/Login"),
                 Provider = new CookieAuthenticationProvider
                 {

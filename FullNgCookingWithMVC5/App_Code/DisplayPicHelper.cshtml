@@ -1,0 +1,9 @@
+﻿@helper DisplayPicture(Byte[] pic, string alt)
+{   
+    
+    var base64 = Convert.ToBase64String(pic);
+    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+    <img class="avatar" src="@imgSrc" alt="@alt"> 
+} 
+
+

@@ -1,4 +1,4 @@
-﻿namespace NgCooking.Model
+﻿namespace Models.Ctegories
 {
     public class Category
     {

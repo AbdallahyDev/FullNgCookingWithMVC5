@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Models.Recettes;
+using System;
 using System.Collections.Generic;
 
-namespace NgCooking.Model
+namespace Models.Ingredients
 {
     public class Ingredient
     {

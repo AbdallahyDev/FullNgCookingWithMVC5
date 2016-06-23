@@ -1,0 +1,101 @@
+﻿@model Models.Users.NgCookingUser
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div class="col-xs-12 col-sm-9">
+    <div class="content" id="content_communaute_details">
+        <section class="section">
+            <div class="row">
+                <div>
+                    <section class="section details">
+                        <div class="row">
+                            <div class="col-vxs-12 col-xs-6 col-sm-5">
+                                <div class="avatar-wrap">
+                                    @DisplayPicHelper.DisplayPicture(Model.Picture, Model.SurName)
+                                </div>
+                            </div>
+                            <div class="col-vxs-12 col-xs-6 col-sm-7">
+                                <div class="infos">
+                                    <h1 class="name">@Model.FirstName @Model.SurName</h1>
+                                    @DisplayLevelHelper.DisplayLevel(Model.Level)
+                                    <p class="city"><span class="fwb">Ville : </span>@Model.City</p>
+                                    @{
+                                        #region Calcul of age 
+                                        DateTime today = DateTime.Today;
+                                        int age = today.Year - Model.Birth.Year; 
+                                        #endregion 
+                                    }
+                                    <p class="age"><span class="fwb">Age : </span>@age ans</p>
+                                    <p class="shared"><span class="fwb">@Model.SurName</span> a partagé <span class="nb">3 recettes</span></p>
+                                    <p class="bio"><span class="fwb">BIO : </span>@Model.Bio.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <hr />
+                   
+                    @CreateNewRecetteHelper.CreateNewRecette()
+                    <section class="section">
+                        <h2 class="title">~ Les recettes de @Model.SurName~</h2>
+                        <div class="recettes row">
+                            <div class="col-xs-6 col-sm-3 recette">
+                                <a href="recettes_details.html">
+                                    <img src="~/img/recettes/tajine-de-poulet.jpg" alt="Le tajine de ta maman">
+                                    <div class="top" title="note : 3,2/5">
+                                        <span class="note">
+                                            <span class="glyphicon glyphicon-heart"></span>
+                                            <span class="glyphicon glyphicon-heart"></span>
+                                            <span class="glyphicon glyphicon-heart"></span>
+                                        </span>
+                                    </div>
+                                    <div class="bot">
+                                        <p class="name">Tajine de poulet</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-xs-6 col-sm-3 recette">
+                                <a href="recettes_details.html">
+                                    <img src="~/img/recettes/tarte-citron-meringue.jpg" alt="Tarte citron meringué">
+                                    <div class="top" title="note : 4,7/5">
+                                        <span class="note">
+                                            <span class="glyphicon glyphicon-heart"></span>
+                                            <span class="glyphicon glyphicon-heart"></span>
+                                            <span class="glyphicon glyphicon-heart"></span>
+                                            <span class="glyphicon glyphicon-heart"></span>
+                                            <span class="glyphicon glyphicon-heart"></span>
+                                        </span>
+                                    </div>
+                                    <div class="bot">
+                                        <p class="name">Tarte citron meringué</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-xs-6 col-sm-3 recette">
+                                <a href="recettes_details.html">
+                                    <img src="~/img/recettes/salade-de-fruit-granite.jpg" alt="Salade de fruits au granité citron">
+                                    <div class="top" title="note : 2,4/5">
+                                        <span class="note">
+                                            <span class="glyphicon glyphicon-heart"></span>
+                                            <span class="glyphicon glyphicon-heart"></span>
+                                        </span>
+                                    </div>
+                                    <div class="bot">
+                                        <p class="name">Salade de fruits au granité citron</p> 
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

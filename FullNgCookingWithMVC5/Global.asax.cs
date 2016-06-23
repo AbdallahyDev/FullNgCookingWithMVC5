@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FullNgCookingWithMVC5.Models;
+using Models.Users;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Metadata.Edm;
@@ -20,7 +21,6 @@ namespace FullNgCookingWithMVC5
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutoMapperWebConfiguration.Configure();
-            //var container = new UnityContainer();
         }
     }
     public static class AutoMapperWebConfiguration
@@ -33,10 +33,7 @@ namespace FullNgCookingWithMVC5
                 config.CreateMap<NgCookingUser, RegisterViewModel>();  
                 config.CreateMap<NgCookingUser, IndexViewModel>();   
 
-            });
-           
-            //Register the Repository in the Unity Container
-            //container.RegisterType<IRepository<EmployeeInfo, int>, EmployeeInfoRepository>();
+            }); 
         } 
     }
 

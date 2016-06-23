@@ -12,6 +12,7 @@ using FullNgCookingWithMVC5.Models;
 using AutoMapper;
 using System.Net;
 using System.Net.Http;
+using Models.Users;
 
 namespace FullNgCookingWithMVC5.Controllers
 {
@@ -62,8 +63,7 @@ namespace FullNgCookingWithMVC5.Controllers
         {
             ViewBag.ReturnUrl = returnUrl;
             return View();
-        }
-
+        } 
         //
         // POST: /Account/Login
         [HttpPost]

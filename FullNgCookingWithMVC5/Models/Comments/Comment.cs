@@ -1,4 +1,4 @@
-﻿namespace NgCooking.Model
+﻿namespace Model.Comments
 {
     public class Comment
     {
@@ -9,6 +9,6 @@
         public int Mark { get; set; }
         public string CommentBody { get; set;}   
         public string  RecetteId { get; set;}   
-        public string UserId { get; set; }       
+        public string UserId { get; set; }        
     }
 }
