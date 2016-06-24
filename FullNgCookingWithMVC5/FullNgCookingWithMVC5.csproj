@@ -193,10 +193,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\Communities\CommunityController.cs" />
+    <Compile Include="Controllers\IngredientController.cs" />
     <Compile Include="Controllers\Recettes\RecetteController.cs" />
     <Compile Include="Controllers\Communities\AccountController.cs" />
     <Compile Include="Controllers\home\HomeController.cs" />
-    <Compile Include="Controllers\Ingredients\IngredientController.cs" />
     <Compile Include="Controllers\Communities\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -207,12 +207,14 @@
     <Compile Include="Models\Recettes\Recette.cs" />
     <Compile Include="Models\Repositories\INgCookingRepository.cs" />
     <Compile Include="Models\Repositories\NgCookingRepository.cs" />
-    <Compile Include="Models\ViewModels\AccountViewModels.cs" />
+    <Compile Include="ViewModels\Communities\AccountViewModels.cs" />
     <Compile Include="Models\NgCookingDbContext.cs" />
     <Compile Include="Models\Communities\NgCookingUser.cs" />
-    <Compile Include="Models\ViewModels\ManageViewModels.cs" />
+    <Compile Include="ViewModels\Communities\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\Ingredients\IngredientViewModel.cs" />
+    <Compile Include="ViewModels\Recettes\RecetteViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -251,18 +253,18 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Community\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Community\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Community\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Community\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Community\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Community\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Community\Account\Login.cshtml" />
+    <Content Include="Views\Community\Account\Register.cshtml" />
+    <Content Include="Views\Community\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Community\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Community\Account\SendCode.cshtml" />
+    <Content Include="Views\Community\Account\VerifyCode.cshtml" />
     <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
@@ -282,11 +284,17 @@
     <Content Include="Views\Community\Edit.cshtml" />
     <Content Include="Views\Community\Index.cshtml" />
     <Content Include="App_Code\DisplayPicHelper.cshtml" />
+    <Content Include="Views\Ingredient\Create.cshtml" />
+    <Content Include="Views\Ingredient\Delete.cshtml" />
+    <Content Include="Views\Ingredient\Details.cshtml" />
+    <Content Include="Views\Ingredient\Edit.cshtml" />
+    <Content Include="Views\Ingredient\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\css\" />
     <Folder Include="Content\fonts\" />
+    <Folder Include="Controllers\Ingredients\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

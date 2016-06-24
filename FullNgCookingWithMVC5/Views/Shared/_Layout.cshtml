@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - NgCooking</title>
-    @*@Styles.Render("~/Content/css/reset.css")*@
+    @Styles.Render("~/Content/css/reset.css")
     @Styles.Render("~/Content/css/style.css") 
     @*@Scripts.Render("~/bundles/modernizr")*@
 
@@ -48,7 +48,7 @@
                                     @Html.ActionLink("Recettes", "Index", "Recette")
                                 </li>
                                 <li class="page_ing"> 
-                                    @Html.ActionLink("Ingredients", "Ingredient", "Ingredient")
+                                    @Html.ActionLink("Ingredients", "Index", "Ingredient")
                                 </li>
                                 <li class="page_com">
                                     @Html.ActionLink("Communauté", "Index", "Community")

@@ -3,10 +3,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.Google;
 using Owin;
 using FullNgCookingWithMVC5.Models;
-using Models.Users;
+using Models.Communities;
 
 namespace FullNgCookingWithMVC5
 {

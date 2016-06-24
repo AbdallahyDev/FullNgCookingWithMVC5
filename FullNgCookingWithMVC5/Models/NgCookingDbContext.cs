@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using Model.Comments;
+using Models.Communities;
 using Models.Ctegories;
 using Models.Ingredients;
 using Models.Recettes;
-using Models.Users;
 using System.Data.Entity;
 
 namespace FullNgCookingWithMVC5.Models

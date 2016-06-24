@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
 using FullNgCookingWithMVC5.Models;
-using Models.Users;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity.Core.Metadata.Edm;
-using System.Linq;
-using System.Web;
+using Models.Communities;
+using Models.Ingredients;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using ViewModels.Ingredients;
 
 namespace FullNgCookingWithMVC5
 {
@@ -32,6 +29,7 @@ namespace FullNgCookingWithMVC5
                 config.CreateMap<RegisterViewModel, NgCookingUser>(); 
                 config.CreateMap<NgCookingUser, RegisterViewModel>();  
                 config.CreateMap<NgCookingUser, IndexViewModel>();   
+                config.CreateMap<IngredientViewModel, Ingredient>();   
 
             }); 
         } 

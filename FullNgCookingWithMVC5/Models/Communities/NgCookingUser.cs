@@ -6,7 +6,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.ComponentModel.DataAnnotations;
 using System;
 
-namespace Models.Users
+namespace Models.Communities
 {
     // Vous pouvez ajouter des données de profil pour l'utilisateur en ajoutant plus de propriétés à votre classe ApplicationUser ; consultez http://go.microsoft.com/fwlink/?LinkID=317594 pour en savoir davantage.
     public class NgCookingUser : IdentityUser

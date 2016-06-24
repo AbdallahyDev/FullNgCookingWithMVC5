@@ -1,9 +1,20 @@
-﻿@helper DisplayPicture(Byte[] pic, string alt)
-{   
-    
-    var base64 = Convert.ToBase64String(pic);
-    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-    <img class="avatar" src="@imgSrc" alt="@alt"> 
+﻿@helper DisplayPicture(Byte[] pic, string alt, string src)
+{
+var base64 = Convert.ToBase64String(pic);
+var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+switch (src)
+{
+    case "user":
+            <img class="avatar" src="@imgSrc" alt="@alt">
+        break;
+    case "ing":
+            <img class="img" src="@imgSrc" alt="@alt">
+        break;
+    default:
+        break;
+}
+
+    @*<img class="avatar" src="@imgSrc" alt="@alt">*@ 
 } 
 
 

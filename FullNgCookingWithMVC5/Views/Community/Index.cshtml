@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Models.Users.NgCookingUser>
+﻿@model IEnumerable<Models.Communities.NgCookingUser>
 
 @{
     ViewBag.Title = "Index";
@@ -35,7 +35,7 @@
                                 <div class="col-xs-6 col-sm-3 user">
 									
                                     <a href="@Url.Action("Details", new {id=communautiy.Id})"> 
-                                        @DisplayPicHelper.DisplayPicture(communautiy.Picture, communautiy.SurName)
+                                        @DisplayPicHelper.DisplayPicture(communautiy.Picture, communautiy.SurName,"user")
                                         <div class="text">
                                             <p class="name">@communautiy.FirstName @communautiy.SurName</p>
                                             @DisplayLevelHelper.DisplayLevel(communautiy.Level) 

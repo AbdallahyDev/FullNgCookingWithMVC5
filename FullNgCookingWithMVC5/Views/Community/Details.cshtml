@@ -1,4 +1,4 @@
-﻿@model Models.Users.NgCookingUser
+﻿@model Models.Communities.NgCookingUser
 
 @{
     ViewBag.Title = "Details";
@@ -14,7 +14,7 @@
                         <div class="row">
                             <div class="col-vxs-12 col-xs-6 col-sm-5">
                                 <div class="avatar-wrap">
-                                    @DisplayPicHelper.DisplayPicture(Model.Picture, Model.SurName)
+                                    @DisplayPicHelper.DisplayPicture(Model.Picture, Model.SurName,"user")
                                 </div>
                             </div>
                             <div class="col-vxs-12 col-xs-6 col-sm-7">

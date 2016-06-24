@@ -1,7 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -10,9 +7,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using FullNgCookingWithMVC5.Models;
 using AutoMapper;
-using System.Net;
-using System.Net.Http;
-using Models.Users;
+using Models.Communities;
 
 namespace FullNgCookingWithMVC5.Controllers
 {
