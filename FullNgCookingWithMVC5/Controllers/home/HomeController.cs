@@ -16,6 +16,7 @@ namespace FullNgCookingWithMVC5.Controllers
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
+            var cntrl = RouteData.Values[""];
 
             return View();
         }

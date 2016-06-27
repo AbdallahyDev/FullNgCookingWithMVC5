@@ -14,10 +14,21 @@ namespace FullNgCookingWithMVC5
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
+              name: "home",
+              url: "Home",
+              defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+           );
+            routes.MapRoute(
+               name: "Acceuil",
+               url: "{controller}/{action}",
+               defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+           );
+            routes.MapRoute(
+                name: "Default", 
+                url: "",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
         }
     }
 }

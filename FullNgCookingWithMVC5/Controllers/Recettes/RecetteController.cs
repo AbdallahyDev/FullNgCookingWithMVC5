@@ -39,6 +39,14 @@ namespace FullNgCookingWithMVC5.Controllers
         // GET: Recette/Create
         public ActionResult Create()
         {
+            var catgories = db.Categories.OrderBy(c => c.Name).ToList();
+            var categoriesNameList = new List<string>();
+            foreach (var item in catgories)
+            {
+                categoriesNameList.Add(item.Name);
+            }
+            ViewBag.categories = categoriesNameList;
+            ViewBag.itemByDefault = "Choose category";
             return View();
         }
 

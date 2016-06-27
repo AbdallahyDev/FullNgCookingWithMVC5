@@ -14,66 +14,136 @@
             <section class="section">
                 <div class="row">
                     @Html.AntiForgeryToken()
+                    <div class="col-xs-6">
+                        <div class="form-horizontal">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                    <div class="form-horizontal">
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                       
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-6" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.IsAvailable, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                <div class="checkbox">
-                                    @Html.EditorFor(model => model.IsAvailable)
-                                    @Html.ValidationMessageFor(model => model.IsAvailable, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.IsAvailable, htmlAttributes: new { @class = "control-label col-md-6" })
+                                <div class="col-md-10">
+                                    <div class="checkbox">
+                                        @Html.EditorFor(model => model.IsAvailable)
+                                        @Html.ValidationMessageFor(model => model.IsAvailable, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Preparation, htmlAttributes: new { @class = "control-label col-md-6" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Preparation, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Preparation, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "control-label col-md-6" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(m => m.Category, new SelectList(@ViewBag.categories), "") 
+                                    @*@Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })*@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Picture, htmlAttributes: new { @class = "control-label col-md-6" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.Picture, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Picture, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Picture, new { @class = "col-md-6 control-label" })
+                                <div class="col-md-10">
+                                    <input type="file" id="image" name="image" />
+                                    <br />
+                                </div>
+                            </div>
+                            @*<p class="line">
+                                    <label for="">Photo de la recette</label>
+                                    <input type="file" class="mb0">
+                                </p>*@
+                            <p class="line ac"> 
+                                <img class="current_img" src="~/img/recette_placeholder.jpg" alt="Visuel recette">
+                            </p>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="hr mt2 mb2"></div>
+                        </div>
+                        <div class="col-xs-12">
+                            <p class="line ac">
+                                <label for="">Sélectionnez tous les ingrédients de votre recette</label>
+                            </p>
+                            <p class="ac">  
+                                @Html.DropDownListFor(m => m.Category, new SelectList(@ViewBag.categories), "Toutes les catégories") 
+                                @*$.ajax({
+                                type: 'POST',
+                                url: url,
+                                data: { searchText: btnvalue, searchValue: studentId },
+                                .success(function (result) {
+                                $('#Add_Update_Details').html(result); 
+                                })*@
+                                <span class="span-label"><span class="glyphicon glyphicon-menu-right nm"></span></span>
+                                <select name="" id="">
+                                    <option value="">Poulet</option>
+                                    <option value="">Maïs</option>
+                                    <option value="">Blé</option>
+                                    <option value="">Boeuf</option>
+                                    <option value="">Pomme</option>
+                                    <option value="">Lait</option>
+                                    <option value="">Gruyère</option>
+                                    <option value="etc">etc...</option>
+                                </select>
+                                <button type="button" class="btn btn_color3"><span class="glyphicon glyphicon-plus"></span></button>
+                            </p>
+                            <div class="ingredients_list">
+                                <ul class="list ac">
+                                    <li class="item">
+                                        <img class="item-img" src="~/img/ingredients/tomate.jpg" alt="tomate">
+                                        <p class="item-name" title="tomate">tomate</p>
+                                        <button type="button" class="remove_ingredient"><span class="glyphicon glyphicon-remove"></span></button>
+                                    </li>
+                                    <li class="item">
+                                        <img class="item-img" src="~/img/ingredients/raisin.jpg" alt="raisin">
+                                        <p class="item-name" title="raisin">raisin</p>
+                                        <button type="button" class="remove_ingredient"><span class="glyphicon glyphicon-remove"></span></button>
+                                    </li>
+                                    <li class="item">
+                                        <img class="item-img" src="~/img/ingredients/kiwi.jpg" alt="kiwi">
+                                        <p class="item-name" title="kiwi">kiwi</p>
+                                        <button type="button" class="remove_ingredient"><span class="glyphicon glyphicon-remove"></span></button>
+                                    </li>
+                                    <li class="item">
+                                        <img class="item-img" src="~/img/ingredients/pasteque.jpg" alt="pasteque">
+                                        <p class="item-name" title="pasteque">pasteque</p>
+                                        <button type="button" class="remove_ingredient"><span class="glyphicon glyphicon-remove"></span></button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="ac">
+                                <p class="recette_total_calories">
+                                    <span class="tit">Valeur calorique <span class="mass">(100g)</span> : </span><span class="val">270<span class="unit">kcal</span></span>
+                                </p>
                             </div>
                         </div>
 
-                        
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Preparation, htmlAttributes: new { @class = "control-label col-md-6" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.Preparation, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Preparation, "", new { @class = "text-danger" })
-                            </div>
+                        <div class="col-xs-12">
+                            <div class="hr mb2"></div>
                         </div>
-
-                        
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "control-label col-md-6" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.Category, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
-                            </div>
+                        <div class="col-xs-12 ac">
+                            <button type="submit" class="btn btn_color3 recette_save"><span class="glyphicon glyphicon-ok mr0"></span><span>Valider ma recette</span></button> 
                         </div>
-
-                         
-
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Create" class="btn btn-default" /> 
-                            </div> 
-                        </div>
+                        @*<div>
+                                <span class="glyphicon glyphicon-ok mr0"></span><span>Valider ma recette</span>
+                                <input type="submit" value="Create"  />
+                            </div>*@
                     </div>
-                </div>
             </section>
         </div>
 

@@ -10,7 +10,24 @@
     @*@Scripts.Render("~/bundles/modernizr")*@
 
 </head>
-<body>  
+<body> 
+    @*@{
+        public string MakeActiveClass()
+        {
+            string result = "active";
+            var r = this.Request.Path;
+
+            //string controllerName = urlHelper.RequestContext.RouteData.Values["controller"].ToString();
+
+            //if (!controllerName.Equals(controller, StringComparison.OrdinalIgnoreCase))
+            //{
+            //    result = null;
+            //}
+
+            return result;
+        }
+
+     }*@ 
     <div id="wrapper">
         <header id="header">
             <div class="container">
@@ -21,6 +38,34 @@
                         </a>
                         <div class="desc">
                             <p>Partagez vos meilleures recettes avec<br />la communauté NgCooking</p>
+                            @{
+                                var route = this.Request.Path;
+                                string homeClassAttribute = "";
+                                string recetteClassAttribute = "";
+                                string ingredientClassAttribute = "";
+                                string communauteClassAttribute = "";
+                                switch (route)
+                                {
+                                    case "/":
+                                        homeClassAttribute = "active";
+                                        break;
+                                    case "/Home":
+                                        homeClassAttribute = "active";
+                                        break;
+                                    case "/Recette":
+                                        recetteClassAttribute = "active";
+                                        break;
+                                    case "/Ingredient":
+                                        ingredientClassAttribute = "active";
+                                        break;
+                                    case "/Communaute":
+                                        communauteClassAttribute = "active";
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+
                             <p><a class="link" href="home.html"><strong>245 recettes</strong> à découvrir !</a></p>
                         </div>
                     </div>
@@ -40,17 +85,18 @@
                             <i class="glyphicon glyphicon-remove"></i>
                         </button>
                         <nav id="nav">
-                            <ul class="menu">
-                                <li class="page_hom active">
+                            <ul class="menu">  
+                                    
+                                <li class="page_hom  @homeClassAttribute">
                                     @Html.ActionLink("Accueil", "Index", "Home")
                                 </li>
-                                <li class="page_rec">
+                                <li class="page_rec @recetteClassAttribute">
                                     @Html.ActionLink("Recettes", "Index", "Recette")
                                 </li>
-                                <li class="page_ing"> 
+                                <li class="page_ing @ingredientClassAttribute"> 
                                     @Html.ActionLink("Ingredients", "Index", "Ingredient")
                                 </li>
-                                <li class="page_com">
+                                <li class="page_com @ingredientClassAttribute"> 
                                     @Html.ActionLink("Communauté", "Index", "Community")
                                 </li> 
                             </ul> 
@@ -66,7 +112,7 @@
                             </div>
                         </nav>
                     </div>
-
+                    
 
                     @RenderBody()
 
