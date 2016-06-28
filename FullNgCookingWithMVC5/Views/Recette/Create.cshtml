@@ -51,8 +51,8 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "control-label col-md-6" })
                                 <div class="col-md-10">
-                                    @Html.DropDownListFor(m => m.Category, new SelectList(@ViewBag.categories), "") 
-                                    @*@Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })*@
+                                    @Html.DropDownListFor(m => m.Category, new SelectList(@ViewBag.categories,"Id", "Name"), "Select Category", new { @class = "form-control" })                             
+                                          @*@Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })*@
                                 </div>
                             </div>
                         </div>
@@ -78,10 +78,12 @@
                         </div>
                         <div class="col-xs-12">
                             <p class="line ac">
-                                <label for="">Sélectionnez tous les ingrédients de votre recette</label>
+                                <label for="" >Sélectionnez tous les ingrédients de votre recette</label>
                             </p>
                             <p class="ac">  
-                                @Html.DropDownListFor(m => m.Category, new SelectList(@ViewBag.categories), "Toutes les catégories") 
+                                @Html.DropDownList("Categories", new SelectList(ViewBag.categories,"Id", "Name"), "Select Category", new { @class = "form-control", @onchange = "GetIng()" })
+                                @*@Html.DropDownList("Category", new SelectList(@ViewBag.categories), "Select Category", new { @class = "form-control", @onchange = "GetIng()" })*@   
+                                @*@Html.ActionLink("@DisplayPicHelper.DisplayPicture(communautiy.Picture, communautiy.SurName, "user")", "details", new { @id = "ddlstate", @style = "width:200px;", @onchange = "javascript:GetCity(this.value);" })*@
                                 @*$.ajax({
                                 type: 'POST',
                                 url: url,
@@ -89,21 +91,16 @@
                                 .success(function (result) {
                                 $('#Add_Update_Details').html(result); 
                                 })*@
+                                                @*A terminer*@
+
                                 <span class="span-label"><span class="glyphicon glyphicon-menu-right nm"></span></span>
-                                <select name="" id="">
-                                    <option value="">Poulet</option>
-                                    <option value="">Maïs</option>
-                                    <option value="">Blé</option>
-                                    <option value="">Boeuf</option>
-                                    <option value="">Pomme</option>
-                                    <option value="">Lait</option>
-                                    <option value="">Gruyère</option>
-                                    <option value="etc">etc...</option>
-                                </select>
+
+                                @Html.DropDownList("Ingredients", new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "Select ingredients", new { @class = "form-control" })
                                 <button type="button" class="btn btn_color3"><span class="glyphicon glyphicon-plus"></span></button>
                             </p>
-                            <div class="ingredients_list">
-                                <ul class="list ac">
+                            @Html.Partial("AddIngToRecette") 
+                            @*<div class="ingredients_list">
+                                <ul class="list ac"> 
                                     <li class="item">
                                         <img class="item-img" src="~/img/ingredients/tomate.jpg" alt="tomate">
                                         <p class="item-name" title="tomate">tomate</p>
@@ -125,7 +122,7 @@
                                         <button type="button" class="remove_ingredient"><span class="glyphicon glyphicon-remove"></span></button>
                                     </li>
                                 </ul>
-                            </div>
+                            </div>*@
                             <div class="ac">
                                 <p class="recette_total_calories">
                                     <span class="tit">Valeur calorique <span class="mass">(100g)</span> : </span><span class="val">270<span class="unit">kcal</span></span>
@@ -153,3 +150,45 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+@section Scripts {
+    <script>
+        function GetIng() {
+            var catId = $("#Categories").val();
+
+            $.ajax({
+                url: '/Recette/AddIngToRecette/',
+                type: "GET",
+                dataType: "JSON", 
+                data: { idCategory: catId },
+                success: function (ingredients) {
+                    $("#Ingredient").html(""); // clear before appending new list
+                    $.each(ingredients, function (i, ing) {
+                        $("#Ingredients").append(
+                            $('<option></option>').val(ing.Id).html(ing.Name));
+                    });
+                }
+            });
+        }
+    </script> 
+    <script>
+        function AddIng() {
+            var ingId = $('#Ingredients').val();
+            var url = "/Recettes/UpdateIngredientList/";
+            $.post(url, { id: ingId ,operation:"add"})
+             .done(function (response) {
+                 $("#SelectedIngerdients").html(response);
+             });
+        }
+
+    </script>
+    <script>
+        function Remove() {
+            var ingId = $('#Ingredients').val();
+            var url = "/Recettes/UpdateIngredientList/";
+            $.post(url, { id: ingId, operation: "add" })
+             .done(function (response) {
+                 $("#SelectedIngerdients").html(response);
+             });
+        }
+    </script>
+}

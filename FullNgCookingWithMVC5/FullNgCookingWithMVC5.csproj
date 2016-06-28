@@ -193,7 +193,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\Communities\CommunityController.cs" />
-    <Compile Include="Controllers\IngredientController.cs" />
+    <Compile Include="Controllers\Ingredients\IngredientController.cs" />
     <Compile Include="Controllers\Recettes\RecetteController.cs" />
     <Compile Include="Controllers\Communities\AccountController.cs" />
     <Compile Include="Controllers\home\HomeController.cs" />
@@ -289,12 +289,12 @@
     <Content Include="Views\Ingredient\Details.cshtml" />
     <Content Include="Views\Ingredient\Edit.cshtml" />
     <Content Include="Views\Ingredient\Index.cshtml" />
+    <Content Include="Views\Recette\AddIngToRecette.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\css\" />
     <Folder Include="Content\fonts\" />
-    <Folder Include="Controllers\Ingredients\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

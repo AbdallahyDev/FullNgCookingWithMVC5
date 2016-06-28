@@ -1,0 +1,26 @@
+﻿@{Layout = null;}
+<span class="span-label"><span class="glyphicon glyphicon-menu-right nm"></span></span>
+@if (ViewBag.ingredientsToDisplay != null)
+{
+    @Html.DropDownList("Ingredients", new SelectList(ViewBag.ingredientsToDisplay), "Select ingredients", new { @class = "form-control" })
+    <button type="button" class="btn btn_color3"><span class="glyphicon glyphicon-plus"></span></button>
+}
+<div class="ingredients_list" id="SelectedIngerdients">
+    <ul class="list ac">
+        @if (ViewBag.ingsList != null)
+        {
+            foreach (var item in ViewBag.ingredientsToDisplay)
+            {
+                <li class="item">
+                    @DisplayPicHelper.DisplayPicture(item.Picture, item.Name, "ing")
+                    <p class="@item.Name" title="">@item.Name</p>
+                    <button type="button" class="remove_ingredient" onclick="RemoveIng()"><span class="glyphicon glyphicon-remove"></span></button>
+                </li>
+            }
+
+        }
+
+
+
+    </ul>
+</div>

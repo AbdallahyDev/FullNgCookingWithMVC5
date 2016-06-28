@@ -29,7 +29,7 @@ audio:not([controls]) {
 /* Addresses styling for `hidden` attribute not present in IE 7/8/9, Firefox 3, * and Safari 4.
 * Known issue: no IE 6 support. */
 [hidden] {
-	display: none;
+	display: none; 
 }
 
 

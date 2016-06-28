@@ -27,24 +27,25 @@
                     </select>
                 </p>
             </div>
-           
+            
+            
             <div class="users row">
-                @{  
-                            foreach (var communautiy in Model)
-                            {
-                                <div class="col-xs-6 col-sm-3 user">
-									
-                                    <a href="@Url.Action("Details", new {id=communautiy.Id})"> 
-                                        @DisplayPicHelper.DisplayPicture(communautiy.Picture, communautiy.SurName,"user")
-                                        <div class="text">
-                                            <p class="name">@communautiy.FirstName @communautiy.SurName</p>
-                                            @DisplayLevelHelper.DisplayLevel(communautiy.Level)  
-                                        </div>
-                                    </a> 
-								</div>
-                            }
+                @{
+                    foreach (var communautiy in Model) 
+                    {
+                        @*@Html.ActionLink("@DisplayPicHelper.DisplayPicture(communautiy.Picture, communautiy.SurName, "user")", "details", new { id = communautiy.Id })*@
+                        <div class="col-xs-6 col-sm-3 user">
+                            <a href=@Url.Action("Details", new {id=communautiy.Id})> 
+                                @DisplayPicHelper.DisplayPicture(communautiy.Picture, communautiy.SurName, "user")
+                                <div class="text">
+                                    <p class="name">@communautiy.FirstName @communautiy.SurName</p>  
+                                    @DisplayLevelHelper.DisplayLevel(communautiy.Level)
+                                </div>
+                            </a>
+                        </div>
+                    }
                 }
-</div>
+            </div>
 </section>
        
     </div>

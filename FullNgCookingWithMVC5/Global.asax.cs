@@ -24,7 +24,7 @@ namespace FullNgCookingWithMVC5
     {
         public static void Configure()
         {
-            Mapper.Initialize(config =>
+            Mapper.Initialize(config => 
             {
                 config.CreateMap<RegisterViewModel, NgCookingUser>(); 
                 config.CreateMap<NgCookingUser, RegisterViewModel>();  

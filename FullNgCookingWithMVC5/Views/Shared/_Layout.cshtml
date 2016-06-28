@@ -58,7 +58,7 @@
                                     case "/Ingredient":
                                         ingredientClassAttribute = "active";
                                         break;
-                                    case "/Communaute":
+                                    case "/Community":
                                         communauteClassAttribute = "active";
                                         break;
                                     default:
@@ -96,14 +96,14 @@
                                 <li class="page_ing @ingredientClassAttribute"> 
                                     @Html.ActionLink("Ingredients", "Index", "Ingredient")
                                 </li>
-                                <li class="page_com @ingredientClassAttribute"> 
+                                <li class="page_com @communauteClassAttribute"> 
                                     @Html.ActionLink("Communauté", "Index", "Community")
                                 </li> 
                             </ul> 
-                            <div class="account-area">
+                            <div class="account-area"> 
                                 @if (true)
                                 {
-                                    Html.RenderPartial("~/Views/Shared/_LoginPartial.cshtml"); 
+                                    Html.RenderPartial("~/Views/Shared/_LoginPartial.cshtml");  
                                 } 
                                 @*<button type="button" class="button connect" data-popin-open="connect_popin"><span class="icon"></span>Connexion</button>
                                 <a href="communaute_details.html" class="button account"><span class="icon"></span>Mon profil</a>

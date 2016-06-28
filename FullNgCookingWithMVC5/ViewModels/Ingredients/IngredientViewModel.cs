@@ -20,11 +20,11 @@ namespace ViewModels.Ingredients
         [Required]
         [Range(1, 1000, ErrorMessage = "{0} doit être entre {2} et {1}")] 
         [Display(Name = "Calorie")]
-        public float Calories { get; set; } 
-        //[Required]
-        //[StringLength(30, ErrorMessage = "La chaîne {0} doit comporter au moins {2} caractères.", MinimumLength = 3)]
-        //[Display(Name = "Categorie")]
-       
+        public float Calories { get; set; }
+        [Required]
+        [StringLength(30, ErrorMessage = "La chaîne {0} doit comporter au moins {2} caractères.", MinimumLength = 3)]
+        [Display(Name = "Categorie")]
+
         public string Category { get; set; }
     }
 }

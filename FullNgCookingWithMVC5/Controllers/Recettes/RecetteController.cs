@@ -8,10 +8,11 @@ using System.Web;
 using System.Web.Mvc;
 using FullNgCookingWithMVC5.Models;
 using Models.Recettes;
+using Models.Ingredients;
 
 namespace FullNgCookingWithMVC5.Controllers
 {
-    public class RecetteController : Controller 
+    public class RecetteController : Controller
     {
         private NgCookingDbContext db = new NgCookingDbContext();
 
@@ -21,6 +22,20 @@ namespace FullNgCookingWithMVC5.Controllers
             return View(db.Recettes.ToList());
         }
 
+
+        [ActionName("AddIngToRecette")]
+        ///Ingredient/GetIngByCategory
+        public ActionResult GetIngByCategory(int idCategory)
+        {
+            var categorySelected = db.Categories.Find(idCategory);
+            var ingredintsList = db.Ingredients
+                   .Where(ing => ing.Category == categorySelected.Name);
+            var b = ingredintsList.Count();
+            ViewBag.ingredientsToDisplay = ingredintsList.Select(ing=>ing.Name);
+            TempData["ingredients"] = "bbbbb";
+            //db.Ingredients.
+            return View();
+        }
         // GET: Recette/Details/5
         public ActionResult Details(string id)
         {
@@ -39,13 +54,15 @@ namespace FullNgCookingWithMVC5.Controllers
         // GET: Recette/Create
         public ActionResult Create()
         {
-            var catgories = db.Categories.OrderBy(c => c.Name).ToList();
+            var categories = db.Categories.OrderBy(c => c.Name).ToList();
+
             var categoriesNameList = new List<string>();
-            foreach (var item in catgories)
+            foreach (var item in categories)
             {
                 categoriesNameList.Add(item.Name);
             }
-            ViewBag.categories = categoriesNameList;
+            //ViewBag.categories = categoriesNameList;
+            ViewBag.categories = categories;
             ViewBag.itemByDefault = "Choose category";
             return View();
         }

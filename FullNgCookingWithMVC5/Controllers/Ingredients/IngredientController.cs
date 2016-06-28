@@ -74,6 +74,7 @@ namespace FullNgCookingWithMVC5.Controllers
 
             return View(ingredientViewModel);
         }
+      
 
         // GET: Ingredient/Edit/5
         public ActionResult Edit(int? id)
