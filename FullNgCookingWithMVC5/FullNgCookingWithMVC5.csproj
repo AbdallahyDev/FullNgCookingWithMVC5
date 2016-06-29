@@ -215,6 +215,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\Ingredients\IngredientViewModel.cs" />
     <Compile Include="ViewModels\Recettes\RecetteViewModel.cs" />
+    <Compile Include="ViewModels\Recettes\UpdateRecetteIngredientViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -289,7 +290,8 @@
     <Content Include="Views\Ingredient\Details.cshtml" />
     <Content Include="Views\Ingredient\Edit.cshtml" />
     <Content Include="Views\Ingredient\Index.cshtml" />
-    <Content Include="Views\Recette\AddIngToRecette.cshtml" />
+    <Content Include="Views\Recette\UpdateIngredientList.cshtml" />
+    <Content Include="Views\Recette\UpdateIngsList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

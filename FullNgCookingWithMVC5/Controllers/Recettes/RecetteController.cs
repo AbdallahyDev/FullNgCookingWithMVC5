@@ -9,32 +9,69 @@ using System.Web.Mvc;
 using FullNgCookingWithMVC5.Models;
 using Models.Recettes;
 using Models.Ingredients;
+using FullNgCookingWithMVC5.ViewModels.Recettes;
+using ViewModels.Recettes;
+using AutoMapper;
 
 namespace FullNgCookingWithMVC5.Controllers
 {
     public class RecetteController : Controller
     {
         private NgCookingDbContext db = new NgCookingDbContext();
-
+        private IEnumerable<Ingredient> ingredintsList;
         // GET: Recette
         public ActionResult Index()
         {
+            ingredintsList = new HashSet<Ingredient>();
+            TempData["RecetteingredientsList"] = ingredintsList;
             return View(db.Recettes.ToList());
         }
 
-
+        
         [ActionName("AddIngToRecette")]
         ///Ingredient/GetIngByCategory
-        public ActionResult GetIngByCategory(int idCategory)
+        public JsonResult GetIngByCategory(int idCategory)
         {
-            var categorySelected = db.Categories.Find(idCategory);
-            var ingredintsList = db.Ingredients
-                   .Where(ing => ing.Category == categorySelected.Name);
-            var b = ingredintsList.Count();
-            ViewBag.ingredientsToDisplay = ingredintsList.Select(ing=>ing.Name);
-            TempData["ingredients"] = "bbbbb";
+            try
+            {
+
+                var categorySelected = db.Categories.Find(idCategory);
+                var ingredintsList = db.Ingredients
+                       .Where(ing => ing.Category == categorySelected.Name).ToList().OrderBy(ing=>ing.Name);
+                //var b = ingredintsList.Count(); 
+                //ViewBag.ingredientsToDisplay = ingredintsList.Select(ing=>ing.Name);
+                //TempData["ingredientsList"] = ingredintsList.Select(ing => ing.Name);
+                //db.Ingredients.
+                return Json(ingredintsList, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(e.Message);
+            }
+           
+        }
+      
+        public ActionResult UpdateIngredientList(UpdateRecetteIngredientViewModel model)
+        {
+            var op = model.Operation;
+            var tempList = TempData["RecetteingredientsList"];
+            var ing = db.Ingredients.Find(model.Id);
+            switch (op)
+            {
+                case"add":
+                    (tempList as HashSet<Ingredient>).Add(ing);  
+                    break;
+                case "remove":
+                    (tempList as HashSet<Ingredient>).Remove(ing);
+                    break;
+                default:
+                    break;
+            }
+            TempData["RecetteingredientsList"] = tempList;
+            ViewBag.ingredientsToDisplay = tempList;
+            //TempData["ingredients"] = ne; 
             //db.Ingredients.
-            return View();
+            return View(); 
         }
         // GET: Recette/Details/5
         public ActionResult Details(string id)
@@ -72,16 +109,21 @@ namespace FullNgCookingWithMVC5.Controllers
         // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,IsAvailable,Picture,Calories,Preparation,CreationDate,Category,CreatorId")] Recette recette)
+        public ActionResult Create(RecetteViewModel recetteViewModel, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
-                db.Recettes.Add(recette);
+                var newRecette = Mapper.Map<Recette>(recetteViewModel); 
+                if (image != null)
+                {
+                    newRecette.Picture = new byte[image.ContentLength];
+                    image.InputStream.Read(newRecette.Picture, 0, image.ContentLength); 
+                }
+                db.Recettes.Add(newRecette); 
                 db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(recette);
+                return RedirectToAction("Index"); 
+            } 
+            return View(recetteViewModel); 
         }
 
         // GET: Recette/Edit/5

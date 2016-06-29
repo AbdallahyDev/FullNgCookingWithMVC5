@@ -4,7 +4,7 @@
     ViewBag.Title = "Create recette";
 }
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "Recette", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
     <div class="col-xs-12 col-sm-9">
         <div class="content" id="content_recettes_new">
@@ -51,96 +51,57 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "control-label col-md-6" })
                                 <div class="col-md-10">
-                                    @Html.DropDownListFor(m => m.Category, new SelectList(@ViewBag.categories,"Id", "Name"), "Select Category", new { @class = "form-control" })                             
-                                          @*@Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })*@
+                                    @Html.DropDownListFor(m => m.Category, new SelectList(@ViewBag.categories, "Id", "Name"), "Select Category", new { @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })*@
                                 </div>
                             </div>
                         </div>
-                        </div>
-                        <div class="col-xs-6">
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.Picture, new { @class = "col-md-6 control-label" })
-                                <div class="col-md-10">
-                                    <input type="file" id="image" name="image" />
-                                    <br />
-                                </div>
-                            </div>
-                            @*<p class="line">
-                                    <label for="">Photo de la recette</label>
-                                    <input type="file" class="mb0">
-                                </p>*@
-                            <p class="line ac"> 
-                                <img class="current_img" src="~/img/recette_placeholder.jpg" alt="Visuel recette">
-                            </p>
-                        </div>
-                        <div class="col-xs-12">
-                            <div class="hr mt2 mb2"></div>
-                        </div>
-                        <div class="col-xs-12">
-                            <p class="line ac">
-                                <label for="" >Sélectionnez tous les ingrédients de votre recette</label>
-                            </p>
-                            <p class="ac">  
-                                @Html.DropDownList("Categories", new SelectList(ViewBag.categories,"Id", "Name"), "Select Category", new { @class = "form-control", @onchange = "GetIng()" })
-                                @*@Html.DropDownList("Category", new SelectList(@ViewBag.categories), "Select Category", new { @class = "form-control", @onchange = "GetIng()" })*@   
-                                @*@Html.ActionLink("@DisplayPicHelper.DisplayPicture(communautiy.Picture, communautiy.SurName, "user")", "details", new { @id = "ddlstate", @style = "width:200px;", @onchange = "javascript:GetCity(this.value);" })*@
-                                @*$.ajax({
-                                type: 'POST',
-                                url: url,
-                                data: { searchText: btnvalue, searchValue: studentId },
-                                .success(function (result) {
-                                $('#Add_Update_Details').html(result); 
-                                })*@
-                                                @*A terminer*@
-
-                                <span class="span-label"><span class="glyphicon glyphicon-menu-right nm"></span></span>
-
-                                @Html.DropDownList("Ingredients", new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "Select ingredients", new { @class = "form-control" })
-                                <button type="button" class="btn btn_color3"><span class="glyphicon glyphicon-plus"></span></button>
-                            </p>
-                            @Html.Partial("AddIngToRecette") 
-                            @*<div class="ingredients_list">
-                                <ul class="list ac"> 
-                                    <li class="item">
-                                        <img class="item-img" src="~/img/ingredients/tomate.jpg" alt="tomate">
-                                        <p class="item-name" title="tomate">tomate</p>
-                                        <button type="button" class="remove_ingredient"><span class="glyphicon glyphicon-remove"></span></button>
-                                    </li>
-                                    <li class="item">
-                                        <img class="item-img" src="~/img/ingredients/raisin.jpg" alt="raisin">
-                                        <p class="item-name" title="raisin">raisin</p>
-                                        <button type="button" class="remove_ingredient"><span class="glyphicon glyphicon-remove"></span></button>
-                                    </li>
-                                    <li class="item">
-                                        <img class="item-img" src="~/img/ingredients/kiwi.jpg" alt="kiwi">
-                                        <p class="item-name" title="kiwi">kiwi</p>
-                                        <button type="button" class="remove_ingredient"><span class="glyphicon glyphicon-remove"></span></button>
-                                    </li>
-                                    <li class="item">
-                                        <img class="item-img" src="~/img/ingredients/pasteque.jpg" alt="pasteque">
-                                        <p class="item-name" title="pasteque">pasteque</p>
-                                        <button type="button" class="remove_ingredient"><span class="glyphicon glyphicon-remove"></span></button>
-                                    </li>
-                                </ul>
-                            </div>*@
-                            <div class="ac">
-                                <p class="recette_total_calories">
-                                    <span class="tit">Valeur calorique <span class="mass">(100g)</span> : </span><span class="val">270<span class="unit">kcal</span></span>
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="col-xs-12">
-                            <div class="hr mb2"></div>
-                        </div>
-                        <div class="col-xs-12 ac">
-                            <button type="submit" class="btn btn_color3 recette_save"><span class="glyphicon glyphicon-ok mr0"></span><span>Valider ma recette</span></button> 
-                        </div>
-                        @*<div>
-                                <span class="glyphicon glyphicon-ok mr0"></span><span>Valider ma recette</span>
-                                <input type="submit" value="Create"  />
-                            </div>*@
                     </div>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Picture, new { @class = "col-md-6 control-label" })
+                            <div class="col-md-10">
+                                <input type="file" id="image" name="image" />    
+                                <br />
+                            </div>
+                        </div>
+                        @*<p class="line">
+                                <label for="">Photo de la recette</label>
+                                <input type="file" class="mb0">
+                            </p>*@
+                        <p class="line ac">
+                            <img class="current_img" src="~/img/recette_placeholder.jpg" alt="Visuel recette">
+                        </p>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="hr mt2 mb2"></div>
+                    </div>
+                    <div class="col-xs-12">
+                        <p class="line ac">
+                            <label for="">Sélectionnez tous les ingrédients de votre recette</label> 
+                        </p>
+                        <p class="ac">
+                            @Html.DropDownList("Categories", new SelectList(ViewBag.categories, "Id", "Name"), "Select Category", new { @class = "form-control", @onchange = "GetIng()" })
+                            <span class="span-label"><span class="glyphicon glyphicon-menu-right nm"></span></span> 
+                            @Html.DropDownList("Ingredients", new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "Select ingredients", new { @class = "form-control" })
+                            <button type="button" class="btn btn_color3" onclick="AddIng()"><span class="glyphicon glyphicon-plus"></span></button>     
+                            @*<button type="button" value="Upload" onclick="location.href='@Url.Action("UpdateIngredientList", "Recette", new {id=4,operation="add" })'"></button>*@  
+                            <a href="@Url.Action("UpdateIngredientList", "Recette",new {id=4,operation="add"})">Btn</a>  
+                        </p>
+                        @Html.Partial("UpdateIngredientList")   
+                    </div>
+
+                    <div class="col-xs-12">
+                        <div class="hr mb2"></div>
+                    </div>
+                    <div class="col-xs-12 ac">
+                        <button type="submit" class="btn btn_color3 recette_save"><span class="glyphicon glyphicon-ok mr0"></span><span>Valider ma recette</span></button>
+                    </div>
+                    @*<div>
+                            <span class="glyphicon glyphicon-ok mr0"></span><span>Valider ma recette</span>
+                            <input type="submit" value="Create"  />
+                        </div>*@
+                </div>
             </section>
         </div>
 
@@ -154,14 +115,14 @@
     <script>
         function GetIng() {
             var catId = $("#Categories").val();
-
             $.ajax({
                 url: '/Recette/AddIngToRecette/',
-                type: "GET",
-                dataType: "JSON", 
+                type: "POST",
+                dataType: "JSON",
                 data: { idCategory: catId },
                 success: function (ingredients) {
-                    $("#Ingredient").html(""); // clear before appending new list
+                    alert("ça marche..");
+                    $("#Ingredients").html(""); // clear before appending new list
                     $.each(ingredients, function (i, ing) {
                         $("#Ingredients").append(
                             $('<option></option>').val(ing.Id).html(ing.Name));
@@ -169,26 +130,40 @@
                 }
             });
         }
-    </script> 
-    <script>
-        function AddIng() {
-            var ingId = $('#Ingredients').val();
-            var url = "/Recettes/UpdateIngredientList/";
-            $.post(url, { id: ingId ,operation:"add"})
-             .done(function (response) {
-                 $("#SelectedIngerdients").html(response);
-             });
-        }
-
     </script>
     <script>
-        function Remove() {
+        function AddIng() {
+
             var ingId = $('#Ingredients').val();
-            var url = "/Recettes/UpdateIngredientList/";
-            $.post(url, { id: ingId, operation: "add" })
-             .done(function (response) {
-                 $("#SelectedIngerdients").html(response);
-             });
+            //var url = "/Recettes/UpdateIngredientList/";
+            //$.post(url, { id: ingId, operation: "add" })
+            // .done(function (response) {
+            //     $("#SelectedIngerdients").html(response);
+            // });
+            $.ajax({
+                url: '/Recette/UpdateIngredientList/',
+                type: "POST",
+                dataType: "JSON",
+                data: { id: ingId, operation: "add" },
+                success: function (ingredients) {
+                    alert("succes");
+                   
+                }
+            });
+        }
+    </script>
+
+    <script>
+        function RemoveIng(ingId) {
+            $.ajax({
+                url: '/Recette/UpdateIngredientList/',
+                type: "POST",
+                dataType: "JSON",
+                data: { id: ingId, operation: "remove" },
+                success: function (ingredients) { 
+                    alert("succes");
+                }
+            });
         }
     </script>
 }

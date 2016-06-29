@@ -1,0 +1,26 @@
+﻿@{Layout = null;}
+<div class="ingredients_list">
+    <ul class="list ac">
+        @{int caloriesValue = 0;}
+        @if (ViewBag.ingredientsToDisplay != null)
+        {
+            foreach (var ing in ViewBag.ingredientsToDisplay)
+            {
+                caloriesValue += ing.Calories; 
+                <li class="item">
+                    @DisplayPicHelper.DisplayPicture(ing.Picture, ing.Name, "ing")
+                    <p class="item-name" title="@ing.Name">@ing.Name</p> 
+                    <button type="button" class="remove_ingredient" onclick="RemoveIng(@ing.Id)" ><span class="glyphicon glyphicon-remove"></span></button>
+                </li> 
+            }
+        }
+
+
+
+    </ul>
+</div>
+<div class="ac">
+    <p class="recette_total_calories">
+        <span class="tit">Valeur calorique <span class="mass">(100g)</span> : </span><span class="val">@caloriesValue<span class="unit">kcal</span></span>
+    </p>
+</div> 

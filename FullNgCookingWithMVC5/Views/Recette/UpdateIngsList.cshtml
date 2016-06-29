@@ -1,0 +1,4 @@
+﻿@Layout=null
+<span class="span-label"><span class="glyphicon glyphicon-menu-right nm"></span></span>
+@Html.DropDownList("Ingredients", new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "Select ingredients", new { @class = "form-control" })
+<button type="button" class="btn btn_color3"><span class="glyphicon glyphicon-plus"></span></button>

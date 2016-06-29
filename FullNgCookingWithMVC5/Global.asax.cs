@@ -2,10 +2,12 @@
 using FullNgCookingWithMVC5.Models;
 using Models.Communities;
 using Models.Ingredients;
+using Models.Recettes;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using ViewModels.Ingredients;
+using ViewModels.Recettes;
 
 namespace FullNgCookingWithMVC5
 {
@@ -29,8 +31,8 @@ namespace FullNgCookingWithMVC5
                 config.CreateMap<RegisterViewModel, NgCookingUser>(); 
                 config.CreateMap<NgCookingUser, RegisterViewModel>();  
                 config.CreateMap<NgCookingUser, IndexViewModel>();   
-                config.CreateMap<IngredientViewModel, Ingredient>();   
-
+                config.CreateMap<IngredientViewModel, Ingredient>();
+                config.CreateMap<RecetteViewModel, Recette>();   
             }); 
         } 
     }
