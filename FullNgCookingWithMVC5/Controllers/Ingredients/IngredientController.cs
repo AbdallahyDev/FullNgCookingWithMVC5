@@ -10,17 +10,32 @@ using FullNgCookingWithMVC5.Models;
 using Models.Ingredients;
 using ViewModels.Ingredients;
 using AutoMapper;
+using FullNgCookingWithMVC5.Services;
 
 namespace FullNgCookingWithMVC5.Controllers
 {
     public class IngredientController : Controller
     {
         private NgCookingDbContext db = new NgCookingDbContext();
-
+        private NgCookingServices _ngCookingServices;
+        private Ingredient _ingredient = new Ingredient();
         // GET: Ingredient
         public ActionResult Index()
         {
             return View(db.Ingredients.ToList());
+        }
+        public IQueryable<Ingredient> getIngsByCategory(int categoryId)
+        {
+            return _ngCookingServices.getIngsByCategory(categoryId);
+        }
+        public Ingredient getIngsById(int ingId) 
+        {
+            return ((Ingredient)_ngCookingServices.FindById(ingId,"Ingredient"));
+        }
+        public IQueryable<Object> getAll()
+        {
+            _ngCookingServices = new NgCookingServices(db);
+            return _ngCookingServices.GetAll<Ingredient>(_ingredient);
         }
 
         // GET: Ingredient/Details/5

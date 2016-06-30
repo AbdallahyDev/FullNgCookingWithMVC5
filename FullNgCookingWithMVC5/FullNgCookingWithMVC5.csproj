@@ -207,6 +207,7 @@
     <Compile Include="Models\Recettes\Recette.cs" />
     <Compile Include="Models\Repositories\INgCookingRepository.cs" />
     <Compile Include="Models\Repositories\NgCookingRepository.cs" />
+    <Compile Include="Services\NgCookingServices.cs" />
     <Compile Include="ViewModels\Communities\AccountViewModels.cs" />
     <Compile Include="Models\NgCookingDbContext.cs" />
     <Compile Include="Models\Communities\NgCookingUser.cs" />

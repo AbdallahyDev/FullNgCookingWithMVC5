@@ -1,6 +1,4 @@
 ﻿@{Layout = null;}
-<div class="ingredients_list">
-    <ul class="list ac">
         @{int caloriesValue = 0;}
         @if (ViewBag.ingredientsToDisplay != null)
         {
@@ -14,13 +12,9 @@
                 </li> 
             }
         }
-
-
-
-    </ul>
-</div>
-<div class="ac">
+<div class="ac">   
     <p class="recette_total_calories">
         <span class="tit">Valeur calorique <span class="mass">(100g)</span> : </span><span class="val">@caloriesValue<span class="unit">kcal</span></span>
     </p>
 </div> 
+@*@{ Response.Redirect("~/Account/LogIn?returnUrl=Products");}*@

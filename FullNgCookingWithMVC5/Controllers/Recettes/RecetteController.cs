@@ -12,22 +12,32 @@ using Models.Ingredients;
 using FullNgCookingWithMVC5.ViewModels.Recettes;
 using ViewModels.Recettes;
 using AutoMapper;
+using FullNgCookingWithMVC5.Services;
+using Models.Ctegories;
 
 namespace FullNgCookingWithMVC5.Controllers
 {
     public class RecetteController : Controller
     {
         private NgCookingDbContext db = new NgCookingDbContext();
-        private IEnumerable<Ingredient> ingredintsList;
+        private NgCookingServices _ngCookingServices;
+        private Category _category = new Category(); 
+        private IEnumerable<Ingredient> ingredintsList = new HashSet<Ingredient>();
         // GET: Recette
         public ActionResult Index()
         {
-            ingredintsList = new HashSet<Ingredient>();
-            TempData["RecetteingredientsList"] = ingredintsList;
+            TempData["RecetteIngredientsList"] = ingredintsList; 
             return View(db.Recettes.ToList());
         }
-
+        #region opertaions for posting a recette
+        public IQueryable<Object> getAllCategories()
+        {
+            _ngCookingServices = new NgCookingServices(db);
+            return _ngCookingServices.GetAll<Category>(_category); 
+        }
         
+        #endregion
+
         [ActionName("AddIngToRecette")]
         ///Ingredient/GetIngByCategory
         public JsonResult GetIngByCategory(int idCategory)
@@ -53,22 +63,23 @@ namespace FullNgCookingWithMVC5.Controllers
       
         public ActionResult UpdateIngredientList(UpdateRecetteIngredientViewModel model)
         {
-            var op = model.Operation;
-            var tempList = TempData["RecetteingredientsList"];
+            var op = model.Operation; 
+            var tempList = TempData["RecetteIngredientsList"];
             var ing = db.Ingredients.Find(model.Id);
             switch (op)
             {
                 case"add":
-                    (tempList as HashSet<Ingredient>).Add(ing);  
+                    (tempList as HashSet<Ingredient>).Add(ing);   
                     break;
                 case "remove":
-                    (tempList as HashSet<Ingredient>).Remove(ing);
+                    (tempList as HashSet<Ingredient>).Remove(ing);   
                     break;
                 default:
                     break;
             }
-            TempData["RecetteingredientsList"] = tempList;
-            ViewBag.ingredientsToDisplay = tempList;
+            TempData["RecetteIngredientsList"] = tempList; 
+            ViewBag.ingredientsToDisplay = tempList; 
+           //eturn RedirectToAction("Create");
             //TempData["ingredients"] = ne; 
             //db.Ingredients.
             return View(); 
