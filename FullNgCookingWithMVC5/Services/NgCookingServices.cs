@@ -86,11 +86,11 @@ namespace FullNgCookingWithMVC5.Services
             }
             else if (type.Equals(typeof(Comment)))
             {
-                results = _cntx.Comments.OrderBy(c => c.Id);
+                results = _cntx.Comments.OrderBy(c => c.Id); 
             }
             else if (type.Equals(typeof(Ingredient)))
             {
-                results = _cntx.Ingredients.OrderBy(c => c.Id);
+                results = _cntx.Ingredients.OrderBy(c => c.Name);
             }
             else if (type.Equals(typeof(Category)))
             {

@@ -24,9 +24,6 @@ namespace ViewModels.Recettes
         public string Preparation { get; set; }
         [Required]
         [Display(Name = "Catégorie")]
-        public string Category { get; set; }
-        [Required]
-        public List<IngredientViewModel> Ingredients { get; set; }  
-
+        public string Category { get; set; } 
     }
 }

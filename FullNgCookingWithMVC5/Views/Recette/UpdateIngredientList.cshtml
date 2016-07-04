@@ -4,6 +4,8 @@
         {
             foreach (var ing in ViewBag.ingredientsToDisplay)
             {
+                var a = ing.Name;
+                <p>@a</p>
                 caloriesValue += ing.Calories; 
                 <li class="item">
                     @DisplayPicHelper.DisplayPicture(ing.Picture, ing.Name, "ing")

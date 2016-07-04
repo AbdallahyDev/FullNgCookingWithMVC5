@@ -33,7 +33,9 @@ namespace FullNgCookingWithMVC5
                     OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, NgCookingUser>(
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager)) 
-                }
+                },
+                SlidingExpiration = true, 
+                ExpireTimeSpan = TimeSpan.FromMinutes(5) 
             });            
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
