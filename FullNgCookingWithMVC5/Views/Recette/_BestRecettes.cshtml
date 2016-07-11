@@ -1,0 +1,23 @@
+﻿@using Models.Recettes;
+@using FullNgCookingWithMVC5.Controllers;
+@{
+    var i = 5;
+ }
+@{
+    RecetteController recetteCntrl = new RecetteController();
+    IList<Models.Recettes.Recette> bestRecettes = new List<Models.Recettes.Recette>();
+    recetteCntrl.InitServices();
+    bestRecettes = recetteCntrl.getBestRecettes().Cast<Models.Recettes.Recette>().ToList();
+    foreach (var item in bestRecettes)
+    {  
+        <div class="col-xs-6 col-sm-3 recette">     
+            <a href="@Html.Action("Details","Recette")">        
+                @DisplayPicHelper.DisplayPicture(item.Picture, item.Name, "Recette")
+                @DisplayLevelHelper.DisplayLevel((int)recetteCntrl.getRecetteNote(item.Id))     
+                <div class="bot">
+                    <p class="name">@item.Name</p>          
+                </div>      
+            </a>
+        </div>  
+    }
+}

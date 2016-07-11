@@ -24,14 +24,16 @@
     foreach (var item in listIngs)
     {
         var ing = new Ingredient {
+            Id = ((Ingredient)item).Id,
             Calories = ((Ingredient)item).Calories,
             Category = ((Ingredient)item).Category,
             IsAvailable = ((Ingredient)item).IsAvailable,
             Name = ((Ingredient)item).Name,
             Picture = ((Ingredient)item).Picture
-        }; 
-        defaultIngsList.Add(ing); 
+        };
+        defaultIngsList.Add(ing);
     }
+    var l = defaultIngsList;
 }
 
 @using (Html.BeginForm("Create", "Recette", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
@@ -39,7 +41,7 @@
     <div class="col-xs-12 col-sm-9">
         <div class="content" id="content_recettes_new">
 
-            <h1 class="page-title">Nouvelle recette @categories.Count ! @ingId  </h1>
+            <h1 class="page-title">Nouvelle recette  </h1>
 
             <section class="section">
                 <div class="row">
@@ -106,7 +108,7 @@
                         <div class="hr mt2 mb2"></div>
                     </div>
                     <div class="col-xs-12">
-                        <p class="line ac">
+                        <p class="line ac"> 
                             <label for="">Sélectionnez tous les ingrédients de votre recette</label>
                         </p>
                         <p class="ac">
@@ -170,7 +172,7 @@
         $("#Ingredients").html("");
         $.each(defaultIngsList, function (i, ing) {
             $("#Ingredients").append(
-                $('<option></option>').val(ing.Id).html(ing.Name));
+                $('<option></option>').val(ing.Id).html(ing.Name));     
         });
         function GetIng() {
             var catId = $("#Categories").val();
@@ -194,23 +196,6 @@
         function AddIng() {
 
             var ingId = $('#Ingredients').val();
-            //var url = "/Recettes/UpdateIngredientList/";
-            //$.post(url, { id: ingId, operation: "add" })
-            // .done(function (response) {
-            //     $("#SelectedIngerdients").html(response);
-            // });
-            @*var l= @ingredientCntrl.getAll();*@
-
-            //$.ajax({
-            //    url: '~/Views/Recette/create.cshtml',
-            //    type: 'POST',
-            //    data: { ingId:ingId},
-            //    success: function(result) {
-            //        // TODO: do something with the result returned by the
-            //        // foo.cshtml template
-            //    }
-            //});
-
             $.ajax({
                 url: '/Recette/UpdateIngredientList/',
                 type: "POST",

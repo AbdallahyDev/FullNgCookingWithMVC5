@@ -11,7 +11,8 @@ namespace FullNgCookingWithMVC5.Controllers
     {
         public ActionResult Index() 
         {
-            return View(); 
+            System.Web.HttpContext.Current.Session["recetteIngs"] = new HashSet<Ingredient>();
+            return View();  
         }
 
         public ActionResult About()
@@ -24,8 +25,7 @@ namespace FullNgCookingWithMVC5.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
+            ViewBag.Message = "Your contact page.";  
             return View();
         }
     }

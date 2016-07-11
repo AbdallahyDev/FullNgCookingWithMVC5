@@ -229,6 +229,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="App_Code\DisplayLevelHelper.cshtml" />
     <Content Include="App_Code\CreateNewRecetteHelper.cshtml" />
+    <Content Include="App_Code\Recette.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -293,6 +294,8 @@
     <Content Include="Views\Ingredient\Index.cshtml" />
     <Content Include="Views\Recette\UpdateIngredientList.cshtml" />
     <Content Include="Views\Recette\UpdateIngsList.cshtml" />
+    <Content Include="Views\Recette\_BestRecettes.cshtml" />
+    <Content Include="Views\Recette\_NewRecettes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

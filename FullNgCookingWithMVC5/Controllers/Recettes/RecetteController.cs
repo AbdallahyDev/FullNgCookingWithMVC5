@@ -23,15 +23,20 @@ namespace FullNgCookingWithMVC5.Controllers
     {
         private NgCookingDbContext db = new NgCookingDbContext();
         private NgCookingServices _ngCookingServices;
-        private Category _category = new Category(); 
-        private IEnumerable<Ingredient> ingredintsList = new HashSet<Ingredient>();
+        private Category _category = new Category();
+        private Recette _recette = new Recette();
+        private IEnumerable<Ingredient> ingredintsList = new HashSet<Ingredient>(); 
         // GET: Recette
         public ActionResult Index()
         {
-            System.Web.HttpContext.Current.Session["recetteIngs"] = new HashSet<Ingredient>(); 
+            System.Web.HttpContext.Current.Session["recetteIngs"] = new HashSet<Ingredient>();   
+            InitServices(); 
             //A rajouter dans create get
-            TempData["RecetteIngredientsList"] = ingredintsList; 
-            return View(db.Recettes.ToList());
+            TempData["RecetteIngredientsList"] = ingredintsList;    
+            return View(db.Recettes.ToList()); 
+        }
+        public void InitServices() {
+            _ngCookingServices = new NgCookingServices(db);   
         }
         #region opertaions for posting a recette
         public IQueryable<Object> getAllCategories()
@@ -39,9 +44,26 @@ namespace FullNgCookingWithMVC5.Controllers
             _ngCookingServices = new NgCookingServices(db);
             return _ngCookingServices.GetAll<Category>(_category); 
         }
-        
-        #endregion
 
+        #endregion
+        public IQueryable<Object> getAll()
+        {
+            return _ngCookingServices.GetAll<Recette>(_recette); 
+        }
+        public float getRecetteNote(int idRecette) 
+        {
+            return _ngCookingServices.getRecetteNote(idRecette);  
+        }
+        public IQueryable<Recette> getBestRecettes()
+        { 
+            var result = _ngCookingServices.GetBestRecettes();
+            var i = result.Count();
+            return _ngCookingServices.GetBestRecettes();  
+        }
+        public IQueryable<Object> getNewRecettes() 
+        {
+            return _ngCookingServices.GetNewRecettes();     
+        }
         [ActionName("AddIngToRecette")]
         ///Ingredient/GetIngByCategory
         public JsonResult GetIngByCategory(int idCategory)
@@ -64,27 +86,42 @@ namespace FullNgCookingWithMVC5.Controllers
             }
            
         }
-      
+        public JsonResult FilterRecettteByName(string subName)
+        {
+            try
+            {
+
+                var result = _ngCookingServices.FilterRecetteByName(subName);
+                var i = result.Count();
+                return Json(result, JsonRequestBehavior.AllowGet);      
+            }
+            catch (Exception e)
+            {
+                return Json(e.Message);
+            }
+
+        }
+
         public JsonResult UpdateIngredientList(UpdateRecetteIngredientViewModel model)
         {
             var op = model.Operation; 
             var tempList = TempData["RecetteIngredientsList"];
-            var ingsList= System.Web.HttpContext.Current.Session["recetteIngs"];
+            var ingsList = ((HashSet<Ingredient>)System.Web.HttpContext.Current.Session["recetteIngs"]);
             var ing = db.Ingredients.Find(model.Id);
             switch (op)
             {
                 case"add":
-                    ((HashSet<Ingredient>)ingsList).Add(ing);    
+                    ingsList.Add(ing);      
                     break;
                 case "remove":
-                    ((HashSet<Ingredient>)ingsList).Remove(ing); 
+                     ingsList.Remove(ing);  
                     //(tempList as HashSet<Ingredient>).Remove(ing);   
-                    break;
+                    break; 
                 default:
                     break;
             }
             TempData["RecetteIngredientsList"] = tempList; 
-            System.Web.HttpContext.Current.Session["recetteIngs"] = ingsList;  
+            System.Web.HttpContext.Current.Session["recetteIngs"] = ((HashSet<Ingredient>)ingsList); 
             ViewBag.ingredientsToDisplay = ingsList;
             //return RedirectToAction("Create");
             //TempData["ingredients"] = ne; 
@@ -129,8 +166,8 @@ namespace FullNgCookingWithMVC5.Controllers
         // POST: Recette/Create
         // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
         // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpPost, ValidateInput(false)]
+        [ValidateAntiForgeryToken] 
         public ActionResult Create(RecetteViewModel recetteViewModel)
         {
             if (ModelState.IsValid)

@@ -46,11 +46,44 @@ namespace FullNgCookingWithMVC5.Services
             }
             return res;
         }
-        public IQueryable<Ingredient> getIngsByCategory(int idCategory) { 
-            var category = FindById(idCategory, "Category") as Category ; 
+        public Object FindByName(string name, string tableName)
+        {
+            object res = null;
+            switch (tableName)
+            {
+                case "Communaute":
+                    res = _cntx.Users.Single(x => x.FirstName == name);
+                    break;
+                case "Comment":
+                    res = _cntx.Comments.Single(x => x.Title == name);
+                    break;
+                case "Recette":
+                    res = _cntx.Recettes.Single(x => x.Name == name);
+                    break;
+                case "Ingredient":
+                    res = _cntx.Ingredients.Single(x => x.Name == name);
+                    break;
+                case "Category":
+                    res = _cntx.Categories.Single(x => x.Name == name);
+                    break;
+                default:
+                    break;
+            }
+            return res;
+
+        }
+        public List<Recette> FilterRecetteByName(string subName)
+        {
+            List<Recette> res;      
+            res = _cntx.Recettes.Where(x => x.Name.Contains(subName)).ToList();     
+            return res;
+        }
+        public IQueryable<Ingredient> getIngsByCategory(int idCategory)
+        {
+            var category = FindById(idCategory, "Category") as Category;
             var ingredintsList = _cntx.Ingredients
                       .Where(ing => ing.Category == category.Name).OrderBy(ing => ing.Name);
-            return ingredintsList ; 
+            return ingredintsList;
         }
         public string Add<T>(T entity)
         {
@@ -68,12 +101,40 @@ namespace FullNgCookingWithMVC5.Services
             {
                 _cntx.Ingredients.Add((Ingredient)t);
             }
-            else if (type.Equals(typeof(Category)))  
+            else if (type.Equals(typeof(Category)))
             {
-                _cntx.Categories.Add((Category)t); 
+                _cntx.Categories.Add((Category)t);
             }
             var messRetour = (_cntx.SaveChanges() > 0) ? "entity added" : "adding entity failed";
             return messRetour;
+        }
+
+        public float getRecetteNote(int idRecette)
+        {
+            var recette = _cntx.Recettes.Find(idRecette);
+            float recetteNote = 0;
+            if (recette != null)
+            {
+                foreach (var item in recette.Comments)
+                {
+                    recetteNote += item.Mark;
+                }
+            }
+            return recetteNote;
+        }
+
+        public IQueryable<Recette> GetNewRecettes()
+        {
+
+            var results = _cntx.Recettes.OrderByDescending(r => r.CreationDate);
+            return results;
+        }
+        public IQueryable<Recette> GetBestRecettes()
+        {
+
+            var results = _cntx.Recettes.OrderBy(x => x.Comments.Sum(y => y.Mark));
+            var i = results.Count();
+            return results;
         }
         public IQueryable<Object> GetAll<T>(T entity)
         {
@@ -81,12 +142,12 @@ namespace FullNgCookingWithMVC5.Services
             IQueryable<Object> results = null;
             if (type.Equals(typeof(Recette)))
             {
-                results = _cntx.Recettes.OrderBy(c => c.Id);
+                results = _cntx.Recettes.OrderBy(c => c.Name);
 
             }
             else if (type.Equals(typeof(Comment)))
             {
-                results = _cntx.Comments.OrderBy(c => c.Id); 
+                results = _cntx.Comments.OrderBy(c => c.Mark);
             }
             else if (type.Equals(typeof(Ingredient)))
             {
@@ -94,7 +155,8 @@ namespace FullNgCookingWithMVC5.Services
             }
             else if (type.Equals(typeof(Category)))
             {
-                results = _cntx.Categories.OrderBy(c => c.Id);
+                results = _cntx.Categories.OrderBy(c => c.Name);
+
             }
             return results;
         }
@@ -115,7 +177,7 @@ namespace FullNgCookingWithMVC5.Services
                 _cntx.Ingredients.Remove((Ingredient)t);
             }
             else if (type.Equals(typeof(Category)))
-            { 
+            {
                 _cntx.Categories.Remove((Category)t);
             }
             _cntx.SaveChanges();

@@ -28,18 +28,20 @@
                 </p>
             </div>
             
+            @Html.ActionLink("tttt", "Details","Community", new { id = 1 }) 
             
             <div class="users row">
                 @{
-                    foreach (var communautiy in Model) 
+                    foreach (var communautiy in Model)
                     {
+                        @Html.ActionLink("llllllll", "Modify", "Villa", new {id = 1})  
                         @*@Html.ActionLink("@DisplayPicHelper.DisplayPicture(communautiy.Picture, communautiy.SurName, "user")", "details", new { id = communautiy.Id })*@
                         <div class="col-xs-6 col-sm-3 user">
-                            <a href=@Url.Action("Details", new {id=communautiy.Id})> 
-                                @DisplayPicHelper.DisplayPicture(communautiy.Picture, communautiy.SurName, "user")
-                                <div class="text">
-                                    <p class="name">@communautiy.FirstName @communautiy.SurName</p>  
-                                    @DisplayLevelHelper.DisplayLevel(communautiy.Level)
+                            <a href="@Url.Action("Details","Community")" onclick="showDetails(@communautiy.Id)">        
+                                @DisplayPicHelper.DisplayPicture(communautiy.Picture, communautiy.SurName, "user")  
+                                <div class="text"> 
+                                    <p class="name">@communautiy.FirstName @communautiy.SurName</p>     
+                                    @DisplayLevelHelper.DisplayLevel(communautiy.Level)    
                                 </div>
                             </a>
                         </div>
@@ -177,3 +179,19 @@
     }
 
 </table>*@
+@section Scripts {
+<script>
+        function showDetails(id) {
+            $.ajax({
+                url: '/Community/Details/',
+                type: "POST",
+                dataType: "JSON",
+                data: id,
+                success: function (data) {   
+                    alert("succes");
+                    window.location.reload();   
+                }
+            }); 
+        }
+</script>
+}
