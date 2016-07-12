@@ -28,6 +28,11 @@
         }
 
      }*@ 
+    @using FullNgCookingWithMVC5.Controllers;
+    @{
+
+        RecetteController recetteCntrl = new RecetteController();
+    }
     <div id="wrapper">
         <header id="header">
             <div class="container">
@@ -66,7 +71,7 @@
                                 }
                             }
 
-                            <p><a class="link" href="home.html"><strong>245 recettes</strong> à découvrir !</a></p>
+                            <p><a class="link" href="home.html"><strong>@recetteCntrl.getAll().Count() recettes</strong> à découvrir !</a></p>
                         </div>
                     </div>
                 </div>

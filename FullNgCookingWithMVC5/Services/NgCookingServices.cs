@@ -75,7 +75,7 @@ namespace FullNgCookingWithMVC5.Services
         public List<Recette> FilterRecetteByName(string subName)
         {
             List<Recette> res;      
-            res = _cntx.Recettes.Where(x => x.Name.Contains(subName)).ToList();     
+            res = _cntx.Recettes.Where(x => x.Name.ToLower().Contains(subName.ToLower())).ToList();         
             return res;
         }
         public IQueryable<Ingredient> getIngsByCategory(int idCategory)

@@ -1,7 +1,10 @@
 ﻿@model IEnumerable<Models.Recettes.Recette>
+@using FullNgCookingWithMVC5.Controllers;
 
 @{
     ViewBag.Title = "Index";
+    RecetteController recetteCntrl = new RecetteController();
+    recetteCntrl.InitServices();
 }
 <table class="table">
     @*<tr>
@@ -86,15 +89,15 @@
                                 </div>
                                 <div class="filter">
                                     <p><label for="">Ingrédient(s) utlisé(s) pour la recette</label></p>
-                                    <p><input type="text" placeholder="ex: poulet;oeuf;farine"></p>
+                                    <p><input id="ingredients" type="text" placeholder="ex: poulet;oeuf;farine"></p>
                                 </div>
                                 <div class="filter">
                                     <p><label for="">Valeur calorique de la recette <span class="fwn">(kcal/100g)</span></label></p>
                                     <p>
                                         <span class="span-label">entre :</span>
-                                        <input type="number" class="mr0" placeholder="ex: 450">
+                                        <input id="minCalorieValue" type="number" class="mr0" placeholder="ex: 450">
                                         <span class="span-label">et</span>
-                                        <input type="number" placeholder="ex: 750">
+                                        <input id="maxCalorieValue" type="number" placeholder="ex: 750">
                                     </p>
                                 </div>
                             </form>
@@ -105,7 +108,7 @@
             <div class="sort">
                 <p>
                     <span class="span-label">Trier par :</span>
-                    <select name="" id="">
+                    <select name="" id="orderBy">
                         <option value="az">Ordre alphabétique (A->Z)</option>
                         <option value="za">Ordre alphabétique (Z->A)</option>
                         <option value="new">Les plus récentes d'abord</option>
@@ -119,8 +122,28 @@
             </div>
             <div class="result">
                 <div class="recettes row">
-                    <p class=" col-xs-12 blank">Aucune recette ne correspond à votre recherche</p>
-                    
+                    @if (ViewBag.filtredRecette == null)
+                    {
+                        <p class="col-xs-12 blank">Aucune recette ne correspond à votre recherche</p>
+                    }
+                    else
+                    {
+                        <p class="col-xs-12 blank">Recettes trouvées</p>
+                        foreach (var item in ViewBag.filtredRecette)
+                        {
+                            <div class="col-xs-6 col-sm-3 recette">
+                                <a href="Recette/Details?id=@item.Id">
+                                    @DisplayPicHelper.DisplayPicture(item.Picture, item.Name, "Recette")
+                                    @DisplayLevelHelper.DisplayLevel((int)recetteCntrl.getRecetteNote(item.Id))
+                                    <div class="bot">
+                                        <p class="name">@item.Name</p>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                    }
+
+
                     <!--
                     <div class="col-xs-6 col-sm-4 col-md-3 recette">
                         <a href="recettes_details.html">
@@ -179,25 +202,64 @@
             var i;
             var recetteName = $("#recetteName").val();
             $.ajax({
-                url: '/Recette/FindRecetteByName/',
+                url: '/Recette/FilterRecettteByName/',
                 type: "POST",
                 dataType: "JSON",
-                data: { name: recetteName },
-                success: function (recettes) {
-                    ach(ingredients, function (i, ing) {
-                        @{
-                            var l = ingredients
-                        }
-                    alert("ça marche..");
-                    $("#Ingredients").html(""); // clear before appending new list
-                    $.each(ingredients, function (i, ing) {
-                        $("#Ingredients").append(
-                            $('<option></option>').val(ing.Id).html(ing.Name));
-                    });
+                data: { subName: recetteName },
+                success: function (ingredients) {
+                    // alert("ça marche..");
+                    window.location.reload();
+                    //$("#recetteName").val("hhhh");
                 }
-            }); 
-            alert($(this).val());
+
+            });
         });
+        $("#ingredients").bind("", function () {
+            var i;
+            var recetteIngsName = $("#ingredients").val();
+            $.ajax({
+                url: '/Recette/FilterRecettteByIngs/',
+                type: "POST",
+                dataType: "JSON",
+                data: { subNameIngredients: recetteIngsName },
+                success: function (ingredients) {
+                    // alert("ça marche..");
+                    window.location.reload();
+                    //$("#recetteName").val("hhhh");
+                }
+
+            });
+        });
+        $("#minCalorieValue").bind("", function () {
+            var i;
+            var minCalorieValue = $("#minCalorieValue").val();
+            var maxCalorieValue = $("#maxCalorieValue").val();
+            if (minCalorieValue !== undefined && maxCalorieValue !== undefined) {
+                $.ajax({
+                    url: '/Recette/FilterRecettteByCalorieValue/',
+                    type: "POST",
+                    dataType: "JSON",
+                    data: { subNameIngredients: recetteIngsName },
+                    success: function (ingredients) {
+                        // alert("ça marche..");
+                        window.location.reload();
+                        //$("#recetteName").val("hhhh");    
+                    }
+
+                });
+            }
+        });
+
+        window.onbeforeunload = function () {
+            var nam = $("#recetteName").val();
+            localStorage.setItem("recetteSubName", $("#recetteName").val());
+            // ...
+        }
+        window.onload = function () {
+
+            var name = localStorage.getItem("recetteSubName");
+            if (name !== null) $("#recetteName").val(name);
+        }
         function FindByName() {
 
             var i = 10;

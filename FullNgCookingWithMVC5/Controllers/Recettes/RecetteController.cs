@@ -25,14 +25,20 @@ namespace FullNgCookingWithMVC5.Controllers
         private NgCookingServices _ngCookingServices;
         private Category _category = new Category();
         private Recette _recette = new Recette();
-        private IEnumerable<Ingredient> ingredintsList = new HashSet<Ingredient>(); 
+        private IEnumerable<Ingredient> ingredintsList = new HashSet<Ingredient>();
+        private List<Recette> filtredRecette = new List<Recette>();
+        public RecetteController()
+        {
+            _ngCookingServices = new NgCookingServices(db);
+        }
         // GET: Recette
         public ActionResult Index()
         {
-            System.Web.HttpContext.Current.Session["recetteIngs"] = new HashSet<Ingredient>();   
+            System.Web.HttpContext.Current.Session["recetteIngs"] = new HashSet<Ingredient>();
+            ViewBag.filtredRecette = (List<Recette>)System.Web.HttpContext.Current.Session["filtredRecette"];
             InitServices(); 
             //A rajouter dans create get
-            TempData["RecetteIngredientsList"] = ingredintsList;    
+            TempData["RecetteIngredientsList"] = ingredintsList;
             return View(db.Recettes.ToList()); 
         }
         public void InitServices() {
@@ -54,6 +60,16 @@ namespace FullNgCookingWithMVC5.Controllers
         {
             return _ngCookingServices.getRecetteNote(idRecette);  
         }
+        public List<Recette> FilterRecettteByIngs(string subIngName)
+        {
+
+            return null;
+        }
+        public List<Recette> FilterRecettteByCalorieValue(int minCalorieValue, int maxCalorieValue)         
+        {
+                        
+            return null;
+        }
         public IQueryable<Recette> getBestRecettes()
         { 
             var result = _ngCookingServices.GetBestRecettes();
@@ -64,6 +80,7 @@ namespace FullNgCookingWithMVC5.Controllers
         {
             return _ngCookingServices.GetNewRecettes();     
         }
+
         [ActionName("AddIngToRecette")]
         ///Ingredient/GetIngByCategory
         public JsonResult GetIngByCategory(int idCategory)
@@ -92,6 +109,8 @@ namespace FullNgCookingWithMVC5.Controllers
             {
 
                 var result = _ngCookingServices.FilterRecetteByName(subName);
+                filtredRecette = result;
+               System.Web.HttpContext.Current.Session["filtredRecette"] = filtredRecette;
                 var i = result.Count();
                 return Json(result, JsonRequestBehavior.AllowGet);      
             }
@@ -129,6 +148,8 @@ namespace FullNgCookingWithMVC5.Controllers
             //return View(); 
             return Json("message");       
         }
+       
+        [Route("Recette/Details/{id}")]
         // GET: Recette/Details/5
         public ActionResult Details(string id)
         {
@@ -136,12 +157,19 @@ namespace FullNgCookingWithMVC5.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Recette recette = db.Recettes.Find(id);
+            Recette recette = db.Recettes.Find(int.Parse(id));
             if (recette == null)
             {
                 return HttpNotFound();
             }
+            ViewBag.sameRecettesList = getSameRecettes(recette);
             return View(recette);
+        }
+
+        private List<Recette> getSameRecettes(Recette recette)
+        {
+            var listRecette = db.Recettes.Where(x => (x.Calories - recette.Calories) < 50);
+            return listRecette.ToList();
         }
 
         // GET: Recette/Create

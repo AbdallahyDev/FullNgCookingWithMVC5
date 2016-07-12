@@ -96,12 +96,12 @@ namespace FullNgCookingWithMVC5.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);         
             }
-            Ingredient ingredient = db.Ingredients.Find(id);
+            Ingredient ingredient = db.Ingredients.Find(id);            
             if (ingredient == null)
             {
-                return HttpNotFound();
+                return HttpNotFound();      
             }
             return View(ingredient);
         }

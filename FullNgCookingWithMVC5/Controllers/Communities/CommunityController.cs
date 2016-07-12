@@ -4,6 +4,8 @@ using System.Net;
 using System.Web.Mvc;
 using FullNgCookingWithMVC5.Models;
 using Models.Communities;
+using Models.Recettes;
+using System.Collections.Generic;
 
 namespace FullNgCookingWithMVC5.Controllers
 {
@@ -16,7 +18,16 @@ namespace FullNgCookingWithMVC5.Controllers
         {
             return View(db.Users.ToList());    
         }
+        public List<Recette> getRecettesByUserId(string userId)
+        {
+            if (userId==null)
+            {
+                return null;
+            }
+            var userRecettes = db.Recettes.Where(x => x.CreatorId.Equals(userId));
+            return userRecettes.ToList();
 
+        }
         // GET: Community/Details/5
         public ActionResult Details(string id)
         {
@@ -24,7 +35,7 @@ namespace FullNgCookingWithMVC5.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            NgCookingUser ngCookingUser = db.Users.Find(id);
+            var ngCookingUser = db.Users.Find(id);
             if (ngCookingUser == null)
             {
                 return HttpNotFound();

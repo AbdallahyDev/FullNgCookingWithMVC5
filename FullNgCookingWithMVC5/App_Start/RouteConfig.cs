@@ -24,6 +24,11 @@ namespace FullNgCookingWithMVC5
                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
            );
             routes.MapRoute(
+             name: "RecetteDetails",
+             url: "Community/Recette/Details",
+             defaults: new { controller = "Recette", action = "Details", id = UrlParameter.Optional }
+         );
+            routes.MapRoute(
                 name: "Default", 
                 url: "",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

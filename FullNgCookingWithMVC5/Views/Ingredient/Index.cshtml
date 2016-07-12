@@ -48,15 +48,13 @@
         </td>
     </tr>
 }*@
-     
+                    
 </table>  
 
 <div class="col-xs-12 col-sm-9">
     <div class="content" id="content_ingredients">
         <h1 class="page-title">Les ingredients</h1>
-        <p class="btn btn-default" >
-            @Html.ActionLink("Create New", "Create")
-        </p>
+       
         <div class="row">
             <div class="col-xs-12">
                 <div class="panel">
@@ -67,12 +65,12 @@
                                 <form action="#" novalidate>
                                     <div class="filter">
                                         <p><label for="">Nom de l'ingrédient</label></p>
-                                        <p><input type="text" placeholder="ex: Banane"></p>
+                                        <p><input id="ingName" type="text" placeholder="ex: Banane"></p>
                                     </div>
                                     <div class="filter">
                                         <p><label for="">Catégorie</label></p>
                                         <p>
-                                            <select name="" id="">
+                                            <select name="" id="category">
                                                 <option value=""></option>
                                                 <option value="meat">Viandes</option>
                                                 <option value="fruit">Fruits</option>
@@ -87,9 +85,9 @@
                                         <p><label for="">Nombre de calories <span class="fwn">(kcal/100g)</span></label></p>
                                         <p>
                                             <span class="span-label">entre :</span>
-                                            <input type="number" class="mr0" placeholder="ex: 70">
-                                            <span class="span-label">et</span>
-                                            <input type="number" placeholder="ex: 220">
+                                            <input id="minCalorieValue" type="number" class="mr0" placeholder="ex: 70">
+                                            <span class="span-label">et</span>      
+                                            <input id="maxCalorieValue" type="number" placeholder="ex: 220">
                                         </p>
                                     </div>
                                 </form>
@@ -145,108 +143,6 @@
                             </div>
                         </div>
 }
-                        Fin list ings
-                        <div class="col-xs-12 ingredient">
-                            <div class="ing-wrap">
-                                <div class="top">
-                                    <p class="name">Lait</p>
-                                    <p class="category">Produits laitiers</p>
-                                    <img class="img" src="~/img/ingredients/lait.jpg" alt="Poulet">
-                                    <div class="calories-wrap">
-                                        <div class="val">
-                                            <span>320 kcal</span>
-                                            <div class="battery">
-                                                <!-- pourcentage ci-dessous à moduler en fonction du nombre de calories de l'ingredient sur nombre de calories max -->
-                                                <div class="level" style="width: 70%;"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="bot">
-                                    <p class="description">Quo pariatur obcaecati ut, sit veniam molestias eius cum. Facere quibusdam laborum doloribus, incidunt omnis ipsum alias vel est molestiae, iure accusamus.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 ingredient">
-                            <div class="ing-wrap">
-                                <div class="top">
-                                    <p class="name">Thon</p>
-                                    <p class="category">Poissons</p>
-                                    <img class="img" src="img/ingredients/thon.jpg" alt="Poulet">
-                                    <div class="calories-wrap">
-                                        <div class="val">
-                                            <span>110 kcal</span>
-                                            <div class="battery">
-                                                <!-- pourcentage ci-dessous à moduler en fonction du nombre de calories de l'ingredient sur nombre de calories max -->
-                                                <div class="level" style="width: 32%;"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="bot">
-                                    <p class="description">Facere quibusdam laborum doloribus, incidunt omnis ipsum alias vel est molestiae, iure accusamus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo pariatur obcaecati ut, sit veniam molestias eius cum.</p>
-                                    <div class="list">
-                                        <p class="list-title">Aliments similaires</p>
-                                        <ul>
-                                            <li class="item">
-                                                <img class="item-img" src="img/ingredients/boeuf.jpg" alt="Boeuf">
-                                                <p class="item-name" title="boeuf">Boeuf</p>
-                                            </li>
-                                            <li class="item">
-                                                <img class="item-img" src="img/ingredients/poulet.jpg" alt="Poulet">
-                                                <p class="item-name" title="poulet">Poulet</p>
-                                            </li>
-                                            <li class="item">
-                                                <img class="item-img" src="img/ingredients/oeuf.jpg" alt="Oeuf">
-                                                <p class="item-name" title="oeuf">Oeuf</p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 ingredient">
-                            <div class="ing-wrap">
-                                <div class="top">
-                                    <p class="name">Fraise</p>
-                                    <p class="category">Fruits</p>
-                                    <img class="img" src="img/ingredients/fraise.jpg" alt="Poulet">
-                                    <div class="calories-wrap">
-                                        <div class="val">
-                                            <span>75 kcal</span>
-                                            <div class="battery">
-                                                <!-- pourcentage ci-dessous à moduler en fonction du nombre de calories de l'ingredient sur nombre de calories max -->
-                                                <div class="level" style="width: 10%;"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="bot">
-                                    <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo pariatur obcaecati ut, sit veniam molestias eius cum.</p>
-                                    <div class="list">
-                                        <p class="list-title">Aliments similaires</p>
-                                        <ul>
-                                            <li class="item">
-                                                <img class="item-img" src="img/ingredients/tomate.jpg" alt="tomate">
-                                                <p class="item-name" title="tomate">tomate</p>
-                                            </li>
-                                            <li class="item">
-                                                <img class="item-img" src="img/ingredients/raisin.jpg" alt="raisin">
-                                                <p class="item-name" title="raisin">raisin</p>
-                                            </li>
-                                            <li class="item">
-                                                <img class="item-img" src="img/ingredients/kiwi.jpg" alt="kiwi">
-                                                <p class="item-name" title="kiwi">kiwi</p>
-                                            </li>
-                                            <li class="item">
-                                                <img class="item-img" src="img/ingredients/pasteque.jpg" alt="pasteque">
-                                                <p class="item-name" title="pasteque">pasteque</p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div> 
                 <div class="row showmore">
