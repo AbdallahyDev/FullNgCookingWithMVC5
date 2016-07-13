@@ -3,7 +3,6 @@
 @{
     RecetteController recetteCntrl = new RecetteController();
     IList<Models.Recettes.Recette> bestRecettes = new List<Models.Recettes.Recette>();
-    recetteCntrl.InitServices();
     bestRecettes = recetteCntrl.getBestRecettes().Cast<Models.Recettes.Recette>().ToList();
     foreach (var item in bestRecettes)
     {  

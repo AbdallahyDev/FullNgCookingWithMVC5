@@ -6,55 +6,55 @@
 
 <table class="table">
     @*<tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsAvailable)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Picture)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Calories)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Category)
-        </th>
-        <th></th>
-    </tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsAvailable)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Picture)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Calories)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category)
+                </th>
+                <th></th>
+            </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsAvailable)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Picture)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Calories)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}*@
-                    
-</table>  
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsAvailable)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Picture)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Calories)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                </td>
+            </tr>
+        }*@
+
+</table>
 
 <div class="col-xs-12 col-sm-9">
     <div class="content" id="content_ingredients">
         <h1 class="page-title">Les ingredients</h1>
-       
+
         <div class="row">
             <div class="col-xs-12">
                 <div class="panel">
@@ -70,7 +70,7 @@
                                     <div class="filter">
                                         <p><label for="">Catégorie</label></p>
                                         <p>
-                                            <select name="" id="category">
+                                            <select name="" id="categorie">
                                                 <option value=""></option>
                                                 <option value="meat">Viandes</option>
                                                 <option value="fruit">Fruits</option>
@@ -86,7 +86,7 @@
                                         <p>
                                             <span class="span-label">entre :</span>
                                             <input id="minCalorieValue" type="number" class="mr0" placeholder="ex: 70">
-                                            <span class="span-label">et</span>      
+                                            <span class="span-label">et</span>
                                             <input id="maxCalorieValue" type="number" placeholder="ex: 220">
                                         </p>
                                     </div>
@@ -99,52 +99,106 @@
             <div class="col-xs-12">
                 <div class="result">
                     <div class="ingredients row">
-                        <!--
-                        <p class=" col-xs-12 blank">Aucun ingrédient ne correspond à votre recherche</p>
-                        -->
-@foreach (var item in Model)
-{
-                        <div class="col-xs-12 ingredient">
-                            <div class="ing-wrap">
-                                <div class="top">
-                                    <p class="name">@item.Name</p>
-                                    <p class="category">@item.Category</p>
-                                    @DisplayPicHelper.DisplayPicture(item.Picture,item.Name,"ing")
-                                    <div class="calories-wrap">
-                                        <div class="val">
-                                            <span>@item.Calories kcal</span>
-                                            <div class="battery">
-                                                <!-- pourcentage ci-dessous à moduler en fonction du nombre de calories de l'ingredient sur nombre de calories max -->
-                                                <div class="level" style="width: 60%;"></div>
+                        @if (!ViewBag.filteredIngredients == null)
+                        {
+                            if (ViewBag.filtredRecette.Count() > 0)
+                            {
+                                <p class="col-xs-12 blank">Ingredients trouvés</p>
+                                foreach (var item in ViewBag.filtredRecette)
+                                {
+                                    <div class="col-xs-12 ingredient">
+                                        <div class="ing-wrap">
+                                            <div class="top">
+                                                <p class="name">@item.Name</p>
+                                                <p class="category">@item.Category</p>
+                                                @DisplayPicHelper.DisplayPicture(item.Picture, item.Name, "ing")
+                                                <div class="calories-wrap">
+                                                    <div class="val">
+                                                        <span>@item.Calories kcal</span>
+                                                        <div class="battery">
+                                                            <!-- pourcentage ci-dessous à moduler en fonction du nombre de calories de l'ingredient sur nombre de calories max -->
+                                                            <div class="level" style="width: 60%;"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="bot">
+                                                </div>
+                                                <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo pariatur obcaecati ut, sit veniam molestias eius cum. Facere quibusdam laborum doloribus, incidunt omnis ipsum alias vel est molestiae.</p>
+                                                <div class="list">
+                                                    <p class="list-title">Aliments similaires</p>
+                                                    <ul>
+                                                        <li class="item">
+                                                            <img class="item-img" src="~/img/ingredients/boeuf.jpg" alt="Boeuf">
+                                                            <p class="item-name" title="Boeuf">Boeuf</p>
+                                                        </li>
+                                                        <li class="item">
+                                                            <img class="item-img" src="~/img/ingredients/thon.jpg" alt="thon">
+                                                            <p class="item-name" title="Thon">Thon</p>
+                                                        </li>
+                                                        <li class="item">
+                                                            <img class="item-img" src="~/img/ingredients/oeuf.jpg" alt="Oeuf">
+                                                            <p class="item-name" title="Oeuf">Oeuf</p>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <p class="col-xs-12 blank">Aucun ingredient ne correspond à votre recherche</p>
+                            }
+
+                        }
+                        else
+                        {
+
+                            @foreach (var item in Model)
+                            {
+                                <div class="col-xs-12 ingredient">
+                                    <div class="ing-wrap">
+                                        <div class="top">
+                                            <p class="name">@item.Name</p>
+                                            <p class="category">@item.Category</p>
+                                            @DisplayPicHelper.DisplayPicture(item.Picture, item.Name, "ing")
+                                            <div class="calories-wrap">
+                                                <div class="val">
+                                                    <span>@item.Calories kcal</span>
+                                                    <div class="battery">
+                                                        <!-- pourcentage ci-dessous à moduler en fonction du nombre de calories de l'ingredient sur nombre de calories max -->
+                                                        <div class="level" style="width: 60%;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="bot">
+                                            <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo pariatur obcaecati ut, sit veniam molestias eius cum. Facere quibusdam laborum doloribus, incidunt omnis ipsum alias vel est molestiae.</p>
+                                            <div class="list">
+                                                <p class="list-title">Aliments similaires</p>
+                                                <ul>
+                                                    <li class="item">
+                                                        <img class="item-img" src="~/img/ingredients/boeuf.jpg" alt="Boeuf">
+                                                        <p class="item-name" title="Boeuf">Boeuf</p>
+                                                    </li>
+                                                    <li class="item">
+                                                        <img class="item-img" src="~/img/ingredients/thon.jpg" alt="thon">
+                                                        <p class="item-name" title="Thon">Thon</p>
+                                                    </li>
+                                                    <li class="item">
+                                                        <img class="item-img" src="~/img/ingredients/oeuf.jpg" alt="Oeuf">
+                                                        <p class="item-name" title="Oeuf">Oeuf</p>
+                                                    </li>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="bot">
-                                    <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo pariatur obcaecati ut, sit veniam molestias eius cum. Facere quibusdam laborum doloribus, incidunt omnis ipsum alias vel est molestiae.</p>
-                                    <div class="list">
-                                        <p class="list-title">Aliments similaires</p>
-                                        <ul>
-                                            <li class="item">
-                                                <img class="item-img" src="~/img/ingredients/boeuf.jpg" alt="Boeuf">
-                                                <p class="item-name" title="Boeuf">Boeuf</p>
-                                            </li>
-                                            <li class="item">
-                                                <img class="item-img" src="~/img/ingredients/thon.jpg" alt="thon">
-                                                <p class="item-name" title="Thon">Thon</p> 
-                                            </li>
-                                            <li class="item">
-                                                <img class="item-img" src="~/img/ingredients/oeuf.jpg" alt="Oeuf">
-                                                <p class="item-name" title="Oeuf">Oeuf</p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-}
+                            }
+                        }
                     </div>
-                </div> 
+                </div>
                 <div class="row showmore">
                     <div class="col-xs-12">
                         <button type="button" class="btn btn_color1"><span class="glyphicon glyphicon-chevron-down"></span>Afficher d'avantage</button>
@@ -154,3 +208,48 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    <script>
+
+        //    window.onbeforeunload = function () {
+        //    var nam = $("#recetteName").val();
+        //    localStorage.setItem("recetteSubName", $("#recetteName").val());
+        //    var ingName = $("#ingredients").val();
+        //    localStorage.setItem("ingredientsName", $("#ingredients").val());
+        //    var minCalorieValue = $("#minCalorieValue").val();
+        //    localStorage.setItem("minCalorieValue", $("#minCalorieValue").val());
+        //    var maxCalorieValue = $("#maxCalorieValue").val();
+        //    localStorage.setItem("maxCalorieValue", $("#maxCalorieValue").val());
+        //    }
+
+        //window.onload = function () {
+        //    var name = localStorage.getItem("recetteSubName");
+        //    if (name !== null) $("#recetteName").val(name);
+        //    var ingName = localStorage.getItem("ingredientsName");
+        //    if (ingName !== null) $("#ingredients").val(ingName);
+        //    var minCalorieValue = localStorage.getItem("minCalorieValue");
+        //    if (minCalorieValue !== null) $("#minCalorieValue").val(minCalorieValue);
+        //    var maxCalorieValue = localStorage.getItem("maxCalorieValue");
+        //    if (maxCalorieValue !== null) $("#maxCalorieValue").val(maxCalorieValue);
+        //}
+
+        function getFilteredRecette() {
+            var minCalorieValue = $("#minCalorieValue").val();
+            var maxCalorieValue = $("#maxCalorieValue").val();
+            var subIngName = $("#ingName").val();
+            var categorie = $("#categorie").val();      
+            var i = 10;
+            $.ajax({
+                url: '/Ingredient/getFilteredIngredients/',
+                type: "POST",
+                dataType: "JSON",
+                data: { subIngName: subIngName, categorie: categorie, minCalorieValue: minCalorieValue, maxCalorieValue: maxCalorieValue },
+                success: function (ingredients) {
+                    alert("ça marche..");
+                    window.location.reload();
+                }
+            });
+
+        }
+    </script>
+}

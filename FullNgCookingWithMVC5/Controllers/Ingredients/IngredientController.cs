@@ -19,10 +19,30 @@ namespace FullNgCookingWithMVC5.Controllers
         private NgCookingDbContext db = new NgCookingDbContext();
         private NgCookingServices _ngCookingServices;
         private Ingredient _ingredient = new Ingredient();
+        public IngredientController()
+        {
+            _ngCookingServices = new NgCookingServices(db);
+        }
         // GET: Ingredient
         public ActionResult Index()
         {
+            ViewBag.filteredIngredients =  (List<Ingredient>)System.Web.HttpContext.Current.Session["filteredIngredients"];
             return View(db.Ingredients.ToList());
+        }
+        public JsonResult getFilteredIngredients(string subName = "", string ingsName = "", float minCalorieValue = 0, float maxCalorieValue = float.MaxValue)
+        {
+
+            try
+            {
+                var filteredRecettes = _ngCookingServices.getFilteredIngredients(subName, ingsName, minCalorieValue, maxCalorieValue);
+                System.Web.HttpContext.Current.Session["filtredRecette"] = filteredRecettes;
+                return Json(filteredRecettes, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(e.Message);
+            }
+
         }
         public IQueryable<Ingredient> getIngsByCategory(int categoryId)
         {

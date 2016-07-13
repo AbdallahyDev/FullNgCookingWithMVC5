@@ -2,8 +2,7 @@
 @using FullNgCookingWithMVC5.Controllers; 
 @{
     RecetteController recetteCntrl = new RecetteController();
-    IngredientController ingredientCntrl = new IngredientController();
-    recetteCntrl.InitServices();
+    IngredientController ingredientCntrl = new IngredientController();      
     IList <Models.Recettes.Recette> newRecettes = new List<Models.Recettes.Recette>();
     newRecettes = recetteCntrl.getNewRecettes().Cast<Models.Recettes.Recette>().ToList();
     foreach (var item in newRecettes)

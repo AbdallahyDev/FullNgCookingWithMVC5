@@ -15,10 +15,6 @@
     var recetteIngs = ViewBag.recetteIngs;
     float caloriesValue = 0;
     var listIngs = ingredientCntrl.getAll().ToList();
-    if (listIngs.Count > 0)
-    {
-        var firstElem = listIngs.First();
-    }
 
     List<Ingredient> defaultIngsList = new List<Ingredient>();
     foreach (var item in listIngs)
@@ -33,7 +29,6 @@
         };
         defaultIngsList.Add(ing);
     }
-    var l = defaultIngsList;
 }
 
 @using (Html.BeginForm("Create", "Recette", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
@@ -48,7 +43,7 @@
                     @Html.AntiForgeryToken()
                     <div class="col-xs-6">
                         <div class="form-horizontal">
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })       
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-6" })
                                 <div class="col-md-10">
@@ -166,9 +161,6 @@
 
     <script>
         var defaultIngsList =   @Html.Raw(Json.Encode(defaultIngsList));
-        @{
-            var i = 0;
-        }
         $("#Ingredients").html("");
         $.each(defaultIngsList, function (i, ing) {
             $("#Ingredients").append(

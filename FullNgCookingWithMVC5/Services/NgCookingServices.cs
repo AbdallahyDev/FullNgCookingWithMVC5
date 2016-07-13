@@ -46,6 +46,30 @@ namespace FullNgCookingWithMVC5.Services
             }
             return res;
         }
+
+        public List<Ingredient> getFilteredIngredients(string subName, string categorie, float minCalorieValue, float maxCalorieValue)
+        {
+            List<Ingredient> res;   
+            if (subName != "" && categorie != "")
+            {
+                res = _cntx.Ingredients.Where(x => x.Name.ToLower().Contains(subName.ToLower()) && x.Calories < maxCalorieValue && x.Calories > minCalorieValue &&
+                x.Category.ToLower().Contains(categorie.ToLower())).ToList();
+            }
+            else
+            {
+                if (subName == "")
+                {
+                    res = _cntx.Ingredients.Where(x=> x.Calories < maxCalorieValue && x.Calories > minCalorieValue &&
+                    x.Category.ToLower().Contains(categorie.ToLower())).ToList();               
+                }
+                else
+                {
+                    res = _cntx.Ingredients.Where(x => x.Name.ToLower().Contains(subName.ToLower()) &&  x.Calories < maxCalorieValue && x.Calories > minCalorieValue).ToList();         
+                }
+            }
+            return res;
+        }
+
         public Object FindByName(string name, string tableName)
         {
             object res = null;
@@ -72,10 +96,27 @@ namespace FullNgCookingWithMVC5.Services
             return res;
 
         }
-        public List<Recette> FilterRecetteByName(string subName)
+        public List<Recette> getFilteredRecettes(string subName, string ingsName, float minCalorieValue, float maxCalorieValue)
         {
-            List<Recette> res;      
-            res = _cntx.Recettes.Where(x => x.Name.ToLower().Contains(subName.ToLower())).ToList();         
+            List<Recette> res;
+            if (subName!="" && ingsName!="")
+            {
+                res = _cntx.Recettes.Where(x => x.Name.ToLower().Contains(subName.ToLower()) && x.Calories < maxCalorieValue && x.Calories > minCalorieValue &&
+                x.Ingredients.Select(ing => ing.Name.ToLower()).Contains(ingsName.ToLower())).ToList();
+            }
+            else
+            {
+                if (ingsName=="")
+                {
+                    res = _cntx.Recettes.Where(x => x.Name.ToLower().Contains(subName.ToLower()) && x.Calories < maxCalorieValue && x.Calories > minCalorieValue).ToList();
+                }
+                else
+                {
+                    res = _cntx.Recettes.Where(x => x.Calories < maxCalorieValue && x.Calories > minCalorieValue &&
+                    x.Ingredients.Select(ing => ing.Name.ToLower()).Contains(ingsName.ToLower())).ToList();     
+                }
+            }
+
             return res;
         }
         public IQueryable<Ingredient> getIngsByCategory(int idCategory)
