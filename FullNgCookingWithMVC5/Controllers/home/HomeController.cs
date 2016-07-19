@@ -11,6 +11,7 @@ namespace FullNgCookingWithMVC5.Controllers
     {
         public ActionResult Index() 
         {
+            System.Web.HttpContext.Current.Session["sortedCommunitiesList"] = null;
             System.Web.HttpContext.Current.Session["recetteIngs"] = new HashSet<Ingredient>();
             return View();  
         }

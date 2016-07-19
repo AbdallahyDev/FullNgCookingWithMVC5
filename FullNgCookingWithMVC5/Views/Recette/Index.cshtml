@@ -84,7 +84,7 @@
                             <form action="">
                                 <div class="filter">
                                     <p><label for="">Nom de la recette</label></p>
-                                    <p><input id="recetteName" type="text" placeholder="ex: Tajine de poulet" onchange="getFilteredRecette()" ></p>
+                                    <p><input id="recetteName" type="text" placeholder="ex: Tajine de poulet" onchange="getFilteredRecette()"></p>
                                 </div>
                                 <div class="filter">
                                     <p><label for="">Ingrédient(s) utlisé(s) pour la recette</label></p>
@@ -94,7 +94,7 @@
                                     <p><label for="">Valeur calorique de la recette <span class="fwn">(kcal/100g)</span></label></p>
                                     <p>
                                         <span class="span-label">entre :</span>
-                                        <input id="minCalorieValue" type="number" class="mr0" placeholder="ex: 450" onchange="getFilteredRecette()">            
+                                        <input id="minCalorieValue" type="number" class="mr0" placeholder="ex: 450" onchange="getFilteredRecette()">
                                         <span class="span-label">et</span>
                                         <input id="maxCalorieValue" type="number" placeholder="ex: 750" onchange="getFilteredRecette()">
                                     </p>
@@ -107,7 +107,7 @@
             <div class="sort">
                 <p>
                     <span class="span-label">Trier par :</span>
-                    <select name="" id="orderBy">
+                    <select name="" id="orderBy" onchange="getFilteredRecette()">   
                         <option value="az">Ordre alphabétique (A->Z)</option>
                         <option value="za">Ordre alphabétique (Z->A)</option>
                         <option value="new">Les plus récentes d'abord</option>
@@ -188,67 +188,6 @@
 @section Scripts {
 
     <script>
-        @*var defaultIngsList =   @Html.Raw(Json.Encode(defaultIngsList));
-        @{
-            var i = 0;
-        }
-        $("#Ingredients").html("");
-        $.each(defaultIngsList, function (i, ing) {
-            $("#Ingredients").append(
-                $('<option></option>').val(ing.Id).html(ing.Name));
-        });*@
-        //$("#recetteName").bind("change paste keyup", function () {
-        //    var i;
-        //    var recetteName = $("#recetteName").val();
-        //    $.ajax({
-        //        url: '/Recette/FilterRecettteByName/',
-        //        type: "POST",
-        //        dataType: "JSON",
-        //        data: { subName: recetteName },
-        //        success: function (ingredients) {
-        //            // alert("ça marche..");
-        //            window.location.reload();
-        //            //$("#recetteName").val("hhhh");
-        //        }
-
-        //    });
-        //});
-        //$("#ingredients").bind("", function () {
-        //    var i;
-        //    var recetteIngsName = $("#ingredients").val();
-        //    $.ajax({
-        //        url: '/Recette/FilterRecettteByIngs/',
-        //        type: "POST",
-        //        dataType: "JSON",
-        //        data: { subNameIngredients: recetteIngsName },
-        //        success: function (ingredients) {
-        //            // alert("ça marche..");
-        //            window.location.reload();
-        //            //$("#recetteName").val("hhhh");
-        //        }
-
-        //    });
-        //});
-        //$("#minCalorieValue").bind("", function () {
-        //    var i;
-        //    var minCalorieValue = $("#minCalorieValue").val();
-        //    var maxCalorieValue = $("#maxCalorieValue").val();
-        //    if (minCalorieValue !== undefined && maxCalorieValue !== undefined) {
-        //        $.ajax({
-        //            url: '/Recette/FilterRecettteByCalorieValue/',
-        //            type: "POST",
-        //            dataType: "JSON",
-        //            data: { subNameIngredients: recetteIngsName },
-        //            success: function (ingredients) {
-        //                // alert("ça marche..");
-        //                window.location.reload();
-        //                //$("#recetteName").val("hhhh");    
-        //            }
-
-        //        });
-        //    }
-        //});
-
         window.onbeforeunload = function () {
             var nam = $("#recetteName").val();
             localStorage.setItem("recetteSubName", $("#recetteName").val());
@@ -257,37 +196,40 @@
             var minCalorieValue = $("#minCalorieValue").val();
             localStorage.setItem("minCalorieValue", $("#minCalorieValue").val());
             var maxCalorieValue = $("#maxCalorieValue").val();
-            localStorage.setItem("maxCalorieValue", $("#maxCalorieValue").val());   
+            localStorage.setItem("maxCalorieValue", $("#maxCalorieValue").val());
+            var orderBy = $("#orderBy").val();
+            localStorage.setItem("orderBy", $("#orderBy").val());
         }
         window.onload = function () {
 
             var name = localStorage.getItem("recetteSubName");
             if (name !== null) $("#recetteName").val(name);
-            var ingName = localStorage.getItem("ingredientsName");      
+            var ingName = localStorage.getItem("ingredientsName");
             if (ingName !== null) $("#ingredients").val(ingName);
             var minCalorieValue = localStorage.getItem("minCalorieValue");
             if (minCalorieValue !== null) $("#minCalorieValue").val(minCalorieValue);
             var maxCalorieValue = localStorage.getItem("maxCalorieValue");
             if (maxCalorieValue !== null) $("#maxCalorieValue").val(maxCalorieValue);
+            var orderBy = localStorage.getItem("orderBy");
+            if (orderBy !== null) $("#orderBy").val(orderBy);
         }
         function getFilteredRecette() {
             var minCalorieValue = $("#minCalorieValue").val();
             var maxCalorieValue = $("#maxCalorieValue").val();
             var recetteName = $("#recetteName").val();
-            var recetteIngsName = $("#ingredients").val();  
-            var i = 10;
-            var catId = $("#Categories").val();
+            var recetteIngsName = $("#ingredients").val();
+            var orderBy = $("#orderBy").val();  
             $.ajax({
-                url: '/Recette/getFilteredRecettes/',           
+                url: '/Recette/getFilteredRecettes/',
                 type: "POST",
                 dataType: "JSON",
-                data: { subName: recetteName, ingsName: recetteIngsName, minCalorieValue: minCalorieValue, maxCalorieValue:maxCalorieValue },
+                data: { subName: recetteName, ingsName: recetteIngsName, minCalorieValue: minCalorieValue, maxCalorieValue:maxCalorieValue, orderBy: orderBy },
                 success: function (ingredients) {
                     alert("ça marche..");
                     window.location.reload();
                 }
-            });         
-
+            });
         }
+       
     </script>
 }

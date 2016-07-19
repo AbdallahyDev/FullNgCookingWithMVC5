@@ -6,7 +6,7 @@
     bestRecettes = recetteCntrl.getBestRecettes().Cast<Models.Recettes.Recette>().ToList();
     foreach (var item in bestRecettes)
     {  
-        <div class="col-xs-6 col-sm-3 recette">     
+        <div class="col-xs-6 col-sm-3 recette">                 
             <a href="Recette/Details?id=@item.Id">        
                 @DisplayPicHelper.DisplayPicture(item.Picture, item.Name, "Recette")
                 @DisplayLevelHelper.DisplayLevel((int)recetteCntrl.getRecetteNote(item.Id))     

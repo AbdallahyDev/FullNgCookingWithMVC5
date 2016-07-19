@@ -65,12 +65,12 @@
                                 <form action="#" novalidate>
                                     <div class="filter">
                                         <p><label for="">Nom de l'ingrédient</label></p>
-                                        <p><input id="ingName" type="text" placeholder="ex: Banane"></p>
+                                        <p><input id="ingName" type="text" onchange="getFilteredIngredients()" placeholder="ex: Banane"></p>
                                     </div>
                                     <div class="filter">
                                         <p><label for="">Catégorie</label></p>
                                         <p>
-                                            <select name="" id="categorie">
+                                            <select name="" id="categorie" onchange="getFilteredIngredients()">
                                                 <option value=""></option>
                                                 <option value="meat">Viandes</option>
                                                 <option value="fruit">Fruits</option>
@@ -85,9 +85,9 @@
                                         <p><label for="">Nombre de calories <span class="fwn">(kcal/100g)</span></label></p>
                                         <p>
                                             <span class="span-label">entre :</span>
-                                            <input id="minCalorieValue" type="number" class="mr0" placeholder="ex: 70">
+                                            <input id="minCalorieValue" type="number" class="mr0" placeholder="ex: 70" onchange="getFilteredIngredients()">
                                             <span class="span-label">et</span>
-                                            <input id="maxCalorieValue" type="number" placeholder="ex: 220">
+                                            <input id="maxCalorieValue" type="number" placeholder="ex: 220" onchange="getFilteredRecette()">
                                         </p>
                                     </div>
                                 </form>
@@ -99,12 +99,12 @@
             <div class="col-xs-12">
                 <div class="result">
                     <div class="ingredients row">
-                        @if (!ViewBag.filteredIngredients == null)
+                        @if (ViewBag.filteredIngredients != null)
                         {
-                            if (ViewBag.filtredRecette.Count() > 0)
+                            if (ViewBag.filteredIngredients.Count > 0)                  
                             {
                                 <p class="col-xs-12 blank">Ingredients trouvés</p>
-                                foreach (var item in ViewBag.filtredRecette)
+                                foreach (var item in ViewBag.filteredIngredients)           
                                 {
                                     <div class="col-xs-12 ingredient">
                                         <div class="ing-wrap">
@@ -155,7 +155,7 @@
                         else
                         {
 
-                            @foreach (var item in Model)
+                            foreach (var item in Model)
                             {
                                 <div class="col-xs-12 ingredient">
                                     <div class="ing-wrap">
@@ -211,29 +211,29 @@
 @section Scripts {
     <script>
 
-        //    window.onbeforeunload = function () {
-        //    var nam = $("#recetteName").val();
-        //    localStorage.setItem("recetteSubName", $("#recetteName").val());
-        //    var ingName = $("#ingredients").val();
-        //    localStorage.setItem("ingredientsName", $("#ingredients").val());
-        //    var minCalorieValue = $("#minCalorieValue").val();
-        //    localStorage.setItem("minCalorieValue", $("#minCalorieValue").val());
-        //    var maxCalorieValue = $("#maxCalorieValue").val();
-        //    localStorage.setItem("maxCalorieValue", $("#maxCalorieValue").val());
-        //    }
+            window.onbeforeunload = function () {
+            var nam = $("#recetteName").val();
+            localStorage.setItem("recetteSubName", $("#recetteName").val());
+            var ingName = $("#ingredients").val();
+            localStorage.setItem("ingredientsName", $("#ingredients").val());
+            var minCalorieValue = $("#minCalorieValue").val();
+            localStorage.setItem("minCalorieValue", $("#minCalorieValue").val());
+            var maxCalorieValue = $("#maxCalorieValue").val();
+            localStorage.setItem("maxCalorieValue", $("#maxCalorieValue").val());
+            }
 
-        //window.onload = function () {
-        //    var name = localStorage.getItem("recetteSubName");
-        //    if (name !== null) $("#recetteName").val(name);
-        //    var ingName = localStorage.getItem("ingredientsName");
-        //    if (ingName !== null) $("#ingredients").val(ingName);
-        //    var minCalorieValue = localStorage.getItem("minCalorieValue");
-        //    if (minCalorieValue !== null) $("#minCalorieValue").val(minCalorieValue);
-        //    var maxCalorieValue = localStorage.getItem("maxCalorieValue");
-        //    if (maxCalorieValue !== null) $("#maxCalorieValue").val(maxCalorieValue);
-        //}
+        window.onload = function () {       
+            var name = localStorage.getItem("recetteSubName");
+            if (name !== null) $("#recetteName").val(name);
+            var ingName = localStorage.getItem("ingredientsName");
+            if (ingName !== null) $("#ingredients").val(ingName);
+            var minCalorieValue = localStorage.getItem("minCalorieValue");
+            if (minCalorieValue !== null) $("#minCalorieValue").val(minCalorieValue);
+            var maxCalorieValue = localStorage.getItem("maxCalorieValue");      
+            if (maxCalorieValue !== null) $("#maxCalorieValue").val(maxCalorieValue);
+        }
 
-        function getFilteredRecette() {
+        function getFilteredIngredients() {
             var minCalorieValue = $("#minCalorieValue").val();
             var maxCalorieValue = $("#maxCalorieValue").val();
             var subIngName = $("#ingName").val();

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using FullNgCookingWithMVC5.Models;
+using FullNgCookingWithMVC5.ViewModels.Comments;
+using Model.Comments;
 using Models.Communities;
 using Models.Ingredients;
 using Models.Recettes;
@@ -33,6 +35,7 @@ namespace FullNgCookingWithMVC5
                 config.CreateMap<NgCookingUser, IndexViewModel>();   
                 config.CreateMap<IngredientViewModel, Ingredient>();
                 config.CreateMap<RecetteViewModel, Recette>();   
+                config.CreateMap<CommentViewModel, Comment>();  
             }); 
         } 
     }

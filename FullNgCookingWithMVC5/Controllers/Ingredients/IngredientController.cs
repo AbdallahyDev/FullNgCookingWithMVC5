@@ -29,14 +29,14 @@ namespace FullNgCookingWithMVC5.Controllers
             ViewBag.filteredIngredients =  (List<Ingredient>)System.Web.HttpContext.Current.Session["filteredIngredients"];
             return View(db.Ingredients.ToList());
         }
-        public JsonResult getFilteredIngredients(string subName = "", string ingsName = "", float minCalorieValue = 0, float maxCalorieValue = float.MaxValue)
+        public JsonResult getFilteredIngredients(string subIngName = "", string categorie = "", float minCalorieValue = 0, float maxCalorieValue = float.MaxValue)
         {
 
             try
             {
-                var filteredRecettes = _ngCookingServices.getFilteredIngredients(subName, ingsName, minCalorieValue, maxCalorieValue);
-                System.Web.HttpContext.Current.Session["filtredRecette"] = filteredRecettes;
-                return Json(filteredRecettes, JsonRequestBehavior.AllowGet);
+                var filteredIngredients = _ngCookingServices.getFilteredIngredients(subIngName, categorie, minCalorieValue, maxCalorieValue);
+                System.Web.HttpContext.Current.Session["filteredIngredients"] = filteredIngredients; 
+                return Json(filteredIngredients, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {

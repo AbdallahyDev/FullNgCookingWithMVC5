@@ -6,26 +6,47 @@ using FullNgCookingWithMVC5.Models;
 using Models.Communities;
 using Models.Recettes;
 using System.Collections.Generic;
+using System;
+using FullNgCookingWithMVC5.Services;
 
 namespace FullNgCookingWithMVC5.Controllers
 {
     public class CommunityController : Controller
     {
         private NgCookingDbContext db = new NgCookingDbContext();
+        private NgCookingServices _ngCookingServices;
+        public CommunityController()
+        {
+            _ngCookingServices = new NgCookingServices(db);
+        }
 
         // GET: Community
         public ActionResult Index()
         {
-            return View(db.Users.ToList());    
+            var sortedCommunitiesList = (List<NgCookingUser>)System.Web.HttpContext.Current.Session["sortedCommunitiesList"]; 
+            return (sortedCommunitiesList!=null)? View(sortedCommunitiesList) : View(db.Users.ToList());            
+        }
+
+
+        public JsonResult OrderBy(string orderBy)
+        {
+            var communitiesList = db.Users.ToList();
+            var id = communitiesList.First().Id;
+            var result = _ngCookingServices.OrderCommunities(orderBy, communitiesList);
+            System.Web.HttpContext.Current.Session["sortedCommunitiesList"] = result;
+            try
+            {
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(e.Message);
+            }
         }
         public List<Recette> getRecettesByUserId(string userId)
         {
-            if (userId==null)
-            {
-                return null;
-            }
-            var userRecettes = db.Recettes.Where(x => x.CreatorId.Equals(userId));
-            return userRecettes.ToList();
+
+            return _ngCookingServices.getRecettesByUserId(userId);
 
         }
         // GET: Community/Details/5
@@ -41,6 +62,14 @@ namespace FullNgCookingWithMVC5.Controllers
                 return HttpNotFound();
             }
             return View(ngCookingUser);
+        }
+        public NgCookingUser GetUserById(string id)
+        {
+            if (id == null)
+            {
+                return null;
+            }
+            return db.Users.Find(id);
         }
 
         // GET: Community/Create
@@ -73,7 +102,7 @@ namespace FullNgCookingWithMVC5.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            NgCookingUser ngCookingUser = db.Users.Find(id); 
+            NgCookingUser ngCookingUser = db.Users.Find(id);
             if (ngCookingUser == null)
             {
                 return HttpNotFound();

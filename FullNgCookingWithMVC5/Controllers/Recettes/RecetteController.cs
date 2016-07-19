@@ -37,7 +37,7 @@ namespace FullNgCookingWithMVC5.Controllers
             System.Web.HttpContext.Current.Session["recetteIngs"] = new HashSet<Ingredient>();
             ViewBag.filtredRecette = (List<Recette>)System.Web.HttpContext.Current.Session["filtredRecette"];
             //A rajouter dans create get
-            TempData["RecetteIngredientsList"] = ingredintsList;            
+            TempData["RecetteIngredientsList"] = ingredintsList;
             return View(db.Recettes.ToList());
         }
 
@@ -94,7 +94,7 @@ namespace FullNgCookingWithMVC5.Controllers
             }
 
         }
-      
+
         #region The filters
         public List<Recette> FilterRecettteByIngs(string subIngName)
         {
@@ -110,11 +110,6 @@ namespace FullNgCookingWithMVC5.Controllers
         {
             try
             {
-
-                //var result = _ngCookingServices.FilterRecetteByName(subName);
-                //filtredRecette = result;
-                //System.Web.HttpContext.Current.Session["filtredRecette"] = filtredRecette;
-                //var i = result.Count();
                 return Json("", JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
@@ -123,23 +118,38 @@ namespace FullNgCookingWithMVC5.Controllers
             }
 
         }
-        public JsonResult getFilteredRecettes(string subName="", string ingsName="", float minCalorieValue=0, float maxCalorieValue=float.MaxValue)
+        public JsonResult getFilteredRecettes(string subName = "", string ingsName = "", float minCalorieValue = 0, float maxCalorieValue = float.MaxValue, string orderBy = "")
         {
 
             try
             {
-                var filteredRecettes = _ngCookingServices.getFilteredRecettes(subName, ingsName, minCalorieValue, maxCalorieValue);
-                System.Web.HttpContext.Current.Session["filtredRecette"] = filteredRecettes;
-                return Json(filteredRecettes, JsonRequestBehavior.AllowGet);
+                var filteredRecettes = _ngCookingServices.getFilteredRecettes(subName, ingsName, minCalorieValue, maxCalorieValue, orderBy);        
+                System.Web.HttpContext.Current.Session["filtredRecette"] = filteredRecettes;    
+                return Json(filteredRecettes, JsonRequestBehavior.AllowGet);                    
             }
             catch (Exception e)
-            {
-                return Json(e.Message);
+            {   
+                return Json(e.Message);     
             }
 
         }
         #endregion
-       
+
+        //public JsonResult OrderBy(string orderBy, List<Object> filtredRecette)      
+        //{
+        //    var result = _ngCookingServices.OrderRecettes(orderBy, filtredRecette);
+        //    System.Web.HttpContext.Current.Session["filtredRecette"] = result;  
+        //    try
+        //    {
+        //        return Json("", JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return Json(e.Message);
+        //    }
+
+
+        //}
 
         [Route("Recette/Details/{id}")]
         // GET: Recette/Details/5

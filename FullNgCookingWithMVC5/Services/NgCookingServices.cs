@@ -1,5 +1,6 @@
 ﻿using FullNgCookingWithMVC5.Models;
 using Model.Comments;
+using Models.Communities;
 using Models.Ctegories;
 using Models.Ingredients;
 using Models.Recettes;
@@ -47,9 +48,61 @@ namespace FullNgCookingWithMVC5.Services
             return res;
         }
 
+        internal object OrderCommunities(string orderBy, List<NgCookingUser> communitiesList)
+        {
+            List<NgCookingUser> results = null;
+            List<NgCookingUser> usersWithRecette;
+            List<NgCookingUser> usersWithoutRecette;    
+            try
+            {
+                switch (orderBy)
+                {
+                    case "az":
+                        results = communitiesList.OrderBy(x => x.FirstName).ToList();
+                        break;
+                    case "za":
+                        results = communitiesList.OrderByDescending(x => x.FirstName).ToList();
+                        break;
+                    case "exp":
+                        usersWithRecette = communitiesList.Where(u=>getRecettesByUserId(u.Id).Count>0).OrderBy(x => getRecettesByUserId(x.Id).Select(y=>y.Comments.Sum(z=>z.Mark)/getRecettesByUserId(x.Id).Count)).ToList();    
+                        usersWithoutRecette = communitiesList.Where(u=>getRecettesByUserId(u.Id).Count==0).ToList();
+                        results = usersWithRecette.Concat(usersWithoutRecette).ToList();    
+                        break;      
+                    case "nov":     
+                        usersWithRecette = communitiesList.Where(u => getRecettesByUserId(u.Id).Count > 0).OrderByDescending(x => getRecettesByUserId(x.Id).Select(y => y.Comments.Sum(z => z.Mark) / getRecettesByUserId(x.Id).Count)).ToList();
+                        usersWithoutRecette = communitiesList.Where(u => getRecettesByUserId(u.Id).Count == 0).ToList();
+                        results = usersWithoutRecette.Concat(usersWithRecette).ToList();
+                        break;
+                    case "prod":
+                        results = communitiesList.OrderByDescending(x =>getRecettesByUserId(x.Id).Count).ToList();
+                        break;
+                    case "prod_desc":
+                        results = communitiesList.OrderBy(x => getRecettesByUserId(x.Id).Count).ToList();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("le message d'erreur :" + e.Message);
+            }
+            return results;
+        }
+        public List<Recette> getRecettesByUserId(string userId)
+        {
+            if (userId == null)
+            {
+                return null;
+            }
+            var userRecettes = _cntx.Recettes.Where(x => x.CreatorId.Equals(userId));
+            return userRecettes.ToList();
+
+        }
+
         public List<Ingredient> getFilteredIngredients(string subName, string categorie, float minCalorieValue, float maxCalorieValue)
         {
-            List<Ingredient> res;   
+            List<Ingredient> res;
             if (subName != "" && categorie != "")
             {
                 res = _cntx.Ingredients.Where(x => x.Name.ToLower().Contains(subName.ToLower()) && x.Calories < maxCalorieValue && x.Calories > minCalorieValue &&
@@ -59,12 +112,20 @@ namespace FullNgCookingWithMVC5.Services
             {
                 if (subName == "")
                 {
-                    res = _cntx.Ingredients.Where(x=> x.Calories < maxCalorieValue && x.Calories > minCalorieValue &&
-                    x.Category.ToLower().Contains(categorie.ToLower())).ToList();               
+                    res = _cntx.Ingredients.Where(x => x.Calories < maxCalorieValue && x.Calories > minCalorieValue &&
+                    x.Category.ToLower().Contains(categorie.ToLower())).ToList();
                 }
                 else
                 {
-                    res = _cntx.Ingredients.Where(x => x.Name.ToLower().Contains(subName.ToLower()) &&  x.Calories < maxCalorieValue && x.Calories > minCalorieValue).ToList();         
+                    if (subName != "")
+                    {
+                        res = _cntx.Ingredients.Where(x => x.Name.ToLower().Contains(subName.ToLower()) && x.Calories < maxCalorieValue && x.Calories > minCalorieValue).ToList();
+                    }
+                    else
+                    {
+                        res = _cntx.Ingredients.Where(x => x.Calories < maxCalorieValue && x.Calories > minCalorieValue).ToList();
+                    }
+
                 }
             }
             return res;
@@ -96,28 +157,32 @@ namespace FullNgCookingWithMVC5.Services
             return res;
 
         }
-        public List<Recette> getFilteredRecettes(string subName, string ingsName, float minCalorieValue, float maxCalorieValue)
+        public List<Recette> getFilteredRecettes(string subName, string ingsName, float minCalorieValue, float maxCalorieValue, string orderBy)
         {
             List<Recette> res;
-            if (subName!="" && ingsName!="")
+            string[] sd = ingsName.Split(';');
+            if (subName != "" && ingsName != "")                
             {
                 res = _cntx.Recettes.Where(x => x.Name.ToLower().Contains(subName.ToLower()) && x.Calories < maxCalorieValue && x.Calories > minCalorieValue &&
                 x.Ingredients.Select(ing => ing.Name.ToLower()).Contains(ingsName.ToLower())).ToList();
             }
             else
             {
-                if (ingsName=="")
+                if (ingsName == "")
                 {
                     res = _cntx.Recettes.Where(x => x.Name.ToLower().Contains(subName.ToLower()) && x.Calories < maxCalorieValue && x.Calories > minCalorieValue).ToList();
                 }
                 else
                 {
                     res = _cntx.Recettes.Where(x => x.Calories < maxCalorieValue && x.Calories > minCalorieValue &&
-                    x.Ingredients.Select(ing => ing.Name.ToLower()).Contains(ingsName.ToLower())).ToList();     
+                    x.Ingredients.Select(ing => ing.Name.ToLower()).Contains(ingsName.ToLower())).ToList();
                 }
             }
-
-            return res;
+            if (orderBy!="")
+            {
+               res = OrderRecettes(orderBy,res);            
+            }
+            return res; 
         }
         public IQueryable<Ingredient> getIngsByCategory(int idCategory)
         {
@@ -126,6 +191,56 @@ namespace FullNgCookingWithMVC5.Services
                       .Where(ing => ing.Category == category.Name).OrderBy(ing => ing.Name);
             return ingredintsList;
         }
+
+        public List<Recette> OrderRecettes(string orderBy, List<Recette> recettes)
+        {
+           List<Recette> results = null ;
+            List<Recette> recettesWithComment;  
+            List<Recette> recettesWithoutComment;   
+            try
+            {
+                switch (orderBy)            
+                {
+                    case "az":              
+                        results = recettes.OrderBy(x=>x.Name).ToList();               
+                        break;
+                    case "za":
+                        results = recettes.OrderByDescending(x => x.Name).ToList();                             
+                        break;
+                    case "new":
+                        results = recettes.OrderByDescending(x => x.CreationDate).ToList();
+                        break;
+                    case "old":
+                        results = recettes.OrderBy(x => x.CreationDate).ToList();       
+                        break;
+                    case "best":
+                        recettesWithComment = recettes.Where(y => y.Comments.Count > 0).OrderByDescending(x => (x.Comments.Sum(y => y.Mark) / x.Comments.Count)).ToList();
+                        recettesWithoutComment = recettes.Where(y => y.Comments.Count == 0).ToList();   
+                        results = recettesWithComment.Concat(recettesWithoutComment).ToList();    
+                        break;
+                    case "worst":
+                        recettesWithComment = recettes.Where(y => y.Comments.Count > 0).OrderBy(x => (x.Comments.Sum(y => y.Mark) / x.Comments.Count)).ToList();
+                        recettesWithoutComment = recettes.Where(y => y.Comments.Count == 0).ToList();      
+                        results = recettesWithoutComment.Concat(recettesWithComment).ToList();      
+                        break;
+                    case "cal": 
+                        results = recettes.OrderByDescending(x => x.Calories).ToList();
+                        break;
+                    case "cal_desc":
+                        results = recettes.OrderBy(x => x.Calories).ToList();       
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("le message d'erreur :"+e.Message);       
+                throw;
+            }
+            return results; 
+        }
+       
         public string Add<T>(T entity)
         {
             Object t = entity;
