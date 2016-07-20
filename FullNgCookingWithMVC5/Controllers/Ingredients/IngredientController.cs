@@ -21,20 +21,43 @@ namespace FullNgCookingWithMVC5.Controllers
         private Ingredient _ingredient = new Ingredient();
         public IngredientController()
         {
-            _ngCookingServices = new NgCookingServices(db);
+            _ngCookingServices = new NgCookingServices(db);     
         }
         // GET: Ingredient
         public ActionResult Index()
         {
             ViewBag.filteredIngredients =  (List<Ingredient>)System.Web.HttpContext.Current.Session["filteredIngredients"];
+           // ViewBag.allowedNumberToShow = System.Web.HttpContext.Current.Session["allowedNumberToShow"];
             return View(db.Ingredients.ToList());
         }
-        public JsonResult getFilteredIngredients(string subIngName = "", string categorie = "", float minCalorieValue = 0, float maxCalorieValue = float.MaxValue)
+        
+        public JsonResult UpdateAllowedNumber(int listSize, int allowedNumber)
+        {
+            try
+            {
+                if ((listSize-allowedNumber)>=4)
+                {
+                    System.Web.HttpContext.Current.Session["allowedNumberToShow"] = allowedNumber+4;
+                }
+                else
+                {
+                    System.Web.HttpContext.Current.Session["allowedNumberToShow"] = listSize - allowedNumber;
+                }
+                               
+                return Json("", JsonRequestBehavior.AllowGet);          
+            }
+            catch (Exception e)
+            {
+                return Json(e.Message);
+            }
+
+        }
+        public JsonResult getFilteredIngredients(string subIngName = "", int categorieId = 0, float minCalorieValue = 0, float maxCalorieValue = float.MaxValue)
         {
 
             try
             {
-                var filteredIngredients = _ngCookingServices.getFilteredIngredients(subIngName, categorie, minCalorieValue, maxCalorieValue);
+                var filteredIngredients = _ngCookingServices.getFilteredIngredients(subIngName, categorieId, minCalorieValue, maxCalorieValue);
                 System.Web.HttpContext.Current.Session["filteredIngredients"] = filteredIngredients; 
                 return Json(filteredIngredients, JsonRequestBehavior.AllowGet);
             }
@@ -43,6 +66,11 @@ namespace FullNgCookingWithMVC5.Controllers
                 return Json(e.Message);
             }
 
+        }
+        public List<Ingredient> getSameIngredients(Ingredient ingredient)  
+        {
+            var sameIngredientsList = db.Ingredients.Where(x => (x.Calories - ingredient.Calories) < 50 && x.Category.Equals(ingredient.Category) && x.Id!=ingredient.Id);     
+            return sameIngredientsList.ToList();                
         }
         public IQueryable<Ingredient> getIngsByCategory(int categoryId)
         {

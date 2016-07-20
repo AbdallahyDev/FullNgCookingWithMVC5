@@ -171,8 +171,8 @@ namespace FullNgCookingWithMVC5.Controllers
 
         private List<Recette> getSameRecettes(Recette recette)
         {
-            var listRecette = db.Recettes.Where(x => (x.Calories - recette.Calories) < 50);
-            return listRecette.ToList();
+            var listRecette = db.Recettes.Where(x => (x.Calories - recette.Calories) < 50 && x.Category.Equals(recette.Category));
+            return listRecette.ToList();    
         }
 
         #region Recettte creation

@@ -2,20 +2,20 @@
 {
 var base64 = Convert.ToBase64String(pic);
 var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-var classValue="";
+string classValue="";
 switch (src)
 {
     case "user":
         classValue = "avatar";
         break;
     case "ing":
-        classValue = "img";
+        classValue = "item-img";
         break;
     default:
         break; 
 }
 
-    <img class="@classValue" src="@imgSrc" alt="@alt"> 
+    <img class="@classValue" src="@imgSrc" alt="@alt">    
 } 
 
 

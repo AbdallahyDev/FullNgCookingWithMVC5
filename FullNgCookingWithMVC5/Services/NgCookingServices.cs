@@ -100,20 +100,21 @@ namespace FullNgCookingWithMVC5.Services
 
         }
 
-        public List<Ingredient> getFilteredIngredients(string subName, string categorie, float minCalorieValue, float maxCalorieValue)
+        public List<Ingredient> getFilteredIngredients(string subName, int categorieId, float minCalorieValue, float maxCalorieValue)
         {
             List<Ingredient> res;
-            if (subName != "" && categorie != "")
+            var categorie = _cntx.Categories.Find(categorieId);
+            if (subName != "" && categorie !=null)
             {
                 res = _cntx.Ingredients.Where(x => x.Name.ToLower().Contains(subName.ToLower()) && x.Calories < maxCalorieValue && x.Calories > minCalorieValue &&
-                x.Category.ToLower().Contains(categorie.ToLower())).ToList();
+                x.Category.ToLower().Contains(categorie.Name.ToLower())).ToList();          
             }
             else
             {
-                if (subName == "")
+                if (subName == ""&& categorie==null)
                 {
-                    res = _cntx.Ingredients.Where(x => x.Calories < maxCalorieValue && x.Calories > minCalorieValue &&
-                    x.Category.ToLower().Contains(categorie.ToLower())).ToList();
+
+                    res = _cntx.Ingredients.Where(x => x.Calories < maxCalorieValue && x.Calories > minCalorieValue).ToList();
                 }
                 else
                 {
@@ -123,7 +124,8 @@ namespace FullNgCookingWithMVC5.Services
                     }
                     else
                     {
-                        res = _cntx.Ingredients.Where(x => x.Calories < maxCalorieValue && x.Calories > minCalorieValue).ToList();
+                        res = _cntx.Ingredients.Where(x => x.Calories < maxCalorieValue && x.Calories > minCalorieValue &&
+                         x.Category.ToLower().Contains(categorie.Name.ToLower())).ToList();
                     }
 
                 }
