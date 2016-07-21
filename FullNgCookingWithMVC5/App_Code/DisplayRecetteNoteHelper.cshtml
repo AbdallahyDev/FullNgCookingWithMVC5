@@ -1,0 +1,17 @@
+﻿@helper DisplayRecetteNote(float note)
+{
+<div class="top" title="note :@note/5">
+    @{
+
+        <span class="note">
+            @for (int i = 0; i < (int)note; i++)
+            {
+                <span class="glyphicon glyphicon-heart"></span>
+            }
+
+        </span>
+
+    }
+
+</div>
+        }

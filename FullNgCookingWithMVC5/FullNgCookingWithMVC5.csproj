@@ -232,7 +232,10 @@
     <Content Include="App_Code\DisplayLevelHelper.cshtml" />
     <Content Include="App_Code\CreateNewRecetteHelper.cshtml" />
     <Content Include="App_Code\Recette.cshtml" />
+    <Content Include="App_Code\DisplayRecetteNoteHelper.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Communities\Index.js" />
+    <Content Include="Scripts\Ingredients\Index.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -241,6 +244,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\Recettes\Index.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />

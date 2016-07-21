@@ -28,7 +28,6 @@
                 </div>
             </section>
         }
-        @*@CreateNewRecetteHelper.CreateNewRecette()*@
         <section class="section">
             <h2 class="title">~ Nouvelles recettes ~</h2>
             <div class="recettes row">
@@ -37,27 +36,3 @@
         </section>
     </div>
 </div>
-@section Scripts{
-  window.onbeforeunload = function () {
-           
-            localStorage.setItem("recetteSubName", "");
-            localStorage.setItem("ingredientsName", "");
-            localStorage.setItem("minCalorieValue", "");
-            localStorage.setItem("maxCalorieValue", "");
-            localStorage.setItem("orderBy", $("#orderBy").val());
-        }
-        window.onload = function () {
-
-            var name = localStorage.getItem("recetteSubName");
-            if (name !== null) $("#recetteName").val(name);
-            var ingName = localStorage.getItem("ingredientsName");
-            if (ingName !== null) $("#ingredients").val(ingName);
-            var minCalorieValue = localStorage.getItem("minCalorieValue");
-            if (minCalorieValue !== null) $("#minCalorieValue").val(minCalorieValue);
-            var maxCalorieValue = localStorage.getItem("maxCalorieValue");
-            if (maxCalorieValue !== null) $("#maxCalorieValue").val(maxCalorieValue);
-            var orderBy = localStorage.getItem("orderBy");
-            if (orderBy !== null) $("#orderBy").val(orderBy);
-        }
-
-}

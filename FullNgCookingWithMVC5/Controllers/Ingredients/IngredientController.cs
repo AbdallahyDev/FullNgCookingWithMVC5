@@ -27,11 +27,11 @@ namespace FullNgCookingWithMVC5.Controllers
         public ActionResult Index()
         {
             ViewBag.filteredIngredients =  (List<Ingredient>)System.Web.HttpContext.Current.Session["filteredIngredients"];
-           // ViewBag.allowedNumberToShow = System.Web.HttpContext.Current.Session["allowedNumberToShow"];
+            ViewBag.allowedNumberToShow = System.Web.HttpContext.Current.Session["allowedNumberToShow"];
             return View(db.Ingredients.ToList());
         }
         
-        public JsonResult UpdateAllowedNumber(int listSize, int allowedNumber)
+        public ActionResult UpdateAllowedNumber(int listSize, int allowedNumber)        
         {
             try
             {
@@ -41,16 +41,14 @@ namespace FullNgCookingWithMVC5.Controllers
                 }
                 else
                 {
-                    System.Web.HttpContext.Current.Session["allowedNumberToShow"] = listSize - allowedNumber;
-                }
-                               
-                return Json("", JsonRequestBehavior.AllowGet);          
+                    System.Web.HttpContext.Current.Session["allowedNumberToShow"] =allowedNumber+(listSize - allowedNumber);
+                }      
             }
             catch (Exception e)
             {
-                return Json(e.Message);
+                throw;
             }
-
+            return RedirectToAction("Index");   
         }
         public JsonResult getFilteredIngredients(string subIngName = "", int categorieId = 0, float minCalorieValue = 0, float maxCalorieValue = float.MaxValue)
         {
@@ -59,7 +57,7 @@ namespace FullNgCookingWithMVC5.Controllers
             {
                 var filteredIngredients = _ngCookingServices.getFilteredIngredients(subIngName, categorieId, minCalorieValue, maxCalorieValue);
                 System.Web.HttpContext.Current.Session["filteredIngredients"] = filteredIngredients; 
-                return Json(filteredIngredients, JsonRequestBehavior.AllowGet);
+                return Json(new { subIngName= subIngName, categorieId=categorieId, minCalorieValue= minCalorieValue, maxCalorieValue= maxCalorieValue }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {

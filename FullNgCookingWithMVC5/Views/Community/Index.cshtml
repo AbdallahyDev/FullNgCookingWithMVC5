@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
+    int allowedNumber;
 }
 
 <p>
@@ -30,7 +31,8 @@
             
             <div class="users row">
                 @{
-                    foreach (var communautiy in Model)
+                    allowedNumber = ViewBag.allowedNumberToShow != null ? ViewBag.allowedNumberToShow : 2;
+                    foreach (var communautiy in Model.Take(allowedNumber))
                     {
                         <div class="col-xs-6 col-sm-3 user">
                             <a href="Community/Details?id=@communautiy.Id">         
@@ -45,10 +47,33 @@
                 }
             </div>
 </section>
-       
+       @{
+
+           if (allowedNumber < Model.Count())
+           {
+               var diff = Model.Count() - allowedNumber;
+            <div class="row showmore">
+                <div class="col-xs-12">
+                    @if (diff < 4)
+                {
+
+                        <button type="button" class="btn btn_color1" onclick="location.href='Community/UpdateAllowedNumber?listSize=@Model.Count()&allowedNumber=@allowedNumber'"><span class="glyphicon glyphicon-chevron-down"></span>Afficher d'avantage</button>
+
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn_color1" onclick="location.href='Community/UpdateAllowedNumber?listSize=@Model.Count()&allowedNumber=@allowedNumber'"><span class="glyphicon glyphicon-chevron-down"></span>Afficher d'avantage</button>
+
+                    }
+                </div>
+            </div>
+
+           }
+    }
     </div>
 </div>
-@section Scripts {
+
+@*@section Scripts {
 <script>
     window.onbeforeunload = function () {   
         var orderBy = $("#orderBy").val();
@@ -58,18 +83,18 @@
         var orderBy = localStorage.getItem("orderBy");
         if (orderBy !== null) $("#orderBy").val(orderBy);
     }
-        function sortList() {
-            var orderBy = $("#orderBy").val();
-            $.ajax({
-                url: '/Community/OrderBy/',
-                type: "POST",
-                dataType: "JSON",
-                data: { orderBy: orderBy},
-                success: function (ingredients) {
-                    alert("ça marche..");
-                    window.location.reload();
-                }
-            });
-        }
+        //function sortList() {
+        //    var orderBy = $("#orderBy").val();
+        //    $.ajax({
+        //        url: '/Community/OrderBy/',
+        //        type: "POST",
+        //        dataType: "JSON",
+        //        data: { orderBy: orderBy},
+        //        success: function (ingredients) {
+        //            alert("ça marche..");
+        //            window.location.reload();
+        //        }
+        //    });
+        //}
 </script>
-}
+}*@

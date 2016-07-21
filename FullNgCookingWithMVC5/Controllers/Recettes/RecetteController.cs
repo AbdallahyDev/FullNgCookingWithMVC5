@@ -135,21 +135,7 @@ namespace FullNgCookingWithMVC5.Controllers
         }
         #endregion
 
-        //public JsonResult OrderBy(string orderBy, List<Object> filtredRecette)      
-        //{
-        //    var result = _ngCookingServices.OrderRecettes(orderBy, filtredRecette);
-        //    System.Web.HttpContext.Current.Session["filtredRecette"] = result;  
-        //    try
-        //    {
-        //        return Json("", JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return Json(e.Message);
-        //    }
-
-
-        //}
+      
 
         [Route("Recette/Details/{id}")]
         // GET: Recette/Details/5

@@ -2,8 +2,8 @@
 @using Models.Recettes;
 @using FullNgCookingWithMVC5.Controllers;
 @{
-    CommunityController communityCntrl = new CommunityController(); 
-    RecetteController recetteCntrl = new RecetteController();   
+    CommunityController communityCntrl = new CommunityController();
+    RecetteController recetteCntrl = new RecetteController();
     var userRecettes = communityCntrl.getRecettesByUserId(Model.Id);
     ViewBag.Title = "Details";
 }
@@ -18,7 +18,7 @@
                         <div class="row">
                             <div class="col-vxs-12 col-xs-6 col-sm-5">
                                 <div class="avatar-wrap">
-                                    @DisplayPicHelper.DisplayPicture(Model.Picture, Model.SurName,"user")
+                                    @DisplayPicHelper.DisplayPicture(Model.Picture, Model.SurName, "user")
                                 </div>
                             </div>
                             <div class="col-vxs-12 col-xs-6 col-sm-7">
@@ -29,8 +29,8 @@
                                     @{
                                         #region Calcul of age 
                                         DateTime today = DateTime.Today;
-                                        int age = today.Year - Model.Birth.Year; 
-                                        #endregion 
+                                        int age = today.Year - Model.Birth.Year;
+                                        #endregion
                                     }
                                     <p class="age"><span class="fwb">Age : </span>@age ans</p>
                                     <p class="shared"><span class="fwb">@Model.SurName</span> a partagé <span class="nb">@userRecettes.Count recettes</span></p>
@@ -44,18 +44,27 @@
                     @CreateNewRecetteHelper.CreateNewRecette()
                     <section class="section">
                         <h2 class="title">~ Les recettes de @Model.SurName~</h2>
+                        @{ 
+                            if (userRecettes.Count==0)
+                            {
+                                <p>Cet utilisateur n'a pas encore créé de recettes</p>
+                            }
+                            else
+                            {
+                                foreach (var item in userRecettes)
+                                {
+                                    <div class="col-xs-6 col-sm-3 recette">
+                                        <a href="Recette/Details?id=@item.Id">
+                                            @DisplayPicHelper.DisplayPicture(item.Picture, item.Name, "Recette")
+                                            @DisplayLevelHelper.DisplayLevel((int)recetteCntrl.getRecetteNote(item.Id))
+                                            <div class="bot">
+                                                <p class="name">@item.Name</p>
+                                            </div>
+                                        </a>
+                                    </div>      
+                                }
+                            }
 
-                        @foreach (var item in userRecettes)         
-                        {
-                        <div class="col-xs-6 col-sm-3 recette">
-                            <a href="Recette/Details?id=@item.Id">
-                                @DisplayPicHelper.DisplayPicture(item.Picture, item.Name, "Recette")
-                                @DisplayLevelHelper.DisplayLevel((int)recetteCntrl.getRecetteNote(item.Id))
-                                <div class="bot">           
-                                    <p class="name">@item.Name</p>
-                                </div>
-                            </a>
-                        </div>
                         }
                     </section>
                 </div>

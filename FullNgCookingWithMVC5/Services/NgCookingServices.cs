@@ -278,6 +278,7 @@ namespace FullNgCookingWithMVC5.Services
                     recetteNote += item.Mark;
                 }
             }
+            recetteNote = recetteNote != 0 ? (recetteNote / recette.Comments.Count) : 0;        
             return recetteNote;
         }
 

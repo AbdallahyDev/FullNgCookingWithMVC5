@@ -23,11 +23,30 @@ namespace FullNgCookingWithMVC5.Controllers
         // GET: Community
         public ActionResult Index()
         {
-            var sortedCommunitiesList = (List<NgCookingUser>)System.Web.HttpContext.Current.Session["sortedCommunitiesList"]; 
+            var sortedCommunitiesList = (List<NgCookingUser>)System.Web.HttpContext.Current.Session["sortedCommunitiesList"];
+            ViewBag.allowedNumberToShow = System.Web.HttpContext.Current.Session["allowedNumberToShow"];
             return (sortedCommunitiesList!=null)? View(sortedCommunitiesList) : View(db.Users.ToList());            
         }
 
-
+        public ActionResult UpdateAllowedNumber(int listSize, int allowedNumber)
+        {
+            try
+            {
+                if ((listSize - allowedNumber) >= 4)
+                {
+                    System.Web.HttpContext.Current.Session["allowedNumberToShow"] = allowedNumber + 4;
+                }
+                else
+                {
+                    System.Web.HttpContext.Current.Session["allowedNumberToShow"] = allowedNumber + (listSize - allowedNumber);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+            return RedirectToAction("Index");
+        }
         public JsonResult OrderBy(string orderBy)
         {
             var communitiesList = db.Users.ToList();

@@ -9,7 +9,7 @@
     var sumIngredientsCalories = ingredientCntrl.getAll().Sum(x => ((Ingredient)x).Calories);
     IList<Category> categoriesList = new List<Category>();
     categoriesList = recetteCntrl.getAllCategories().Cast<Category>().ToList();
-    int allowedNumber = 5;
+    int allowedNumber = 2;
 }
 
 <div class="col-xs-12 col-sm-9">
@@ -32,7 +32,7 @@
                                         <p><label for="">Catégorie</label></p>
                                         <p>
                                             @Html.DropDownList("Categories", new SelectList(categoriesList, "Id", "Name"), "", new { @class = "form-control", @onchange = "getFilteredIngredients()" })
-                                          
+
                                         </p>
                                     </div>
                                     <div class="filter">
@@ -58,8 +58,15 @@
                             if (ViewBag.filteredIngredients.Count > 0)
                             {
                                 <p class="col-xs-12 blank">Ingredients trouvés</p>
-                                foreach (var filteredIng in ViewBag.filteredIngredients)
+                                allowedNumber = ViewBag.allowedNumberToShow != null ? ViewBag.allowedNumberToShow : 1;
+                                var filteredIngs = ViewBag.filteredIngredients;
+                                foreach (var filteredIng in filteredIngs)
                                 {
+                                    int index = filteredIngs.IndexOf(filteredIng);
+                                    if (index > allowedNumber)
+                                    {
+                                        break;
+                                    }
                                     <div class="col-xs-12 ingredient">
                                         <div class="ing-wrap">
                                             <div class="top">
@@ -78,29 +85,29 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                </div>
                                                 <div class="bot">
                                                     <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo pariatur obcaecati ut, sit veniam molestias eius cum. Facere quibusdam laborum doloribus, incidunt omnis ipsum alias vel est molestiae.</p>
                                                     <div class="list">
                                                         <p class="list-title">Aliments similaires</p>
                                                         <ul>
                                                             @{
-                                                                var sameIngredientsList = ingredientCntrl.getSameIngredients(filteredIng);  
+                                                                var sameIngredientsList = ingredientCntrl.getSameIngredients(filteredIng);
                                                                 if (sameIngredientsList != null)
                                                                 {
                                                                     foreach (var ing in sameIngredientsList)
                                                                     {
-                                                                        <li class="item">       
+                                                                        <li class="item">
                                                                             @DisplayPicHelper.DisplayPicture(ing.Picture, ing.Name, "ing")
                                                                             <p class="item-name" title="@ing.Name">@ing.Name</p>
                                                                         </li>
                                                                     }
                                                                 }
 
-                                                            }       
+                                                            }
                                                         </ul>
                                                     </div>
                                                 </div>
-                                            </div>
                                         </div>
                                     </div>
                                                                     }
@@ -113,7 +120,7 @@
                                                                 }
                                                                 else
                                                                 {
-
+                                                                    allowedNumber = ViewBag.allowedNumberToShow != null ? ViewBag.allowedNumberToShow : 4;
                                                                     foreach (var ing in Model.Take(allowedNumber))
                                                                     {
                                                                         <div class="col-xs-12 ingredient">
@@ -153,14 +160,14 @@
                                                                                                     }
                                                                                                 }
 
-                                                                                            }       
+                                                                                            }
                                                                                         </ul>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                                                        }
                                                                                                     }
+                                                                                                }
                     </div>
                 </div>
                 @{
@@ -174,15 +181,15 @@
                                     @if (diff < 4)
                                     {
 
-                                        <button type="button" class="btn btn_color1" onclick="location.href='Ingredient/UpdateAllowedNumber?listSize=4&&allowedNumber=48'"><span class="glyphicon glyphicon-chevron-down"></span>Afficher d'avantage</button>
+                                        <button type="button" class="btn btn_color1" onclick="location.href='Ingredient/UpdateAllowedNumber?listSize=@ViewBag.filteredIngredients.Count&allowedNumber=@allowedNumber'"><span class="glyphicon glyphicon-chevron-down"></span>Afficher d'avantage</button>
 
                                     }
                                     else
                                     {
-                                        <button type="button" class="btn btn_color1" onclick="location.href='Ingredient/UpdateAllowedNumber?listSize=4&&allowedNumber=48'"><span class="glyphicon glyphicon-chevron-down"></span>Afficher d'avantage</button>
+                                        <button type="button" class="btn btn_color1" onclick="location.href='Ingredient/UpdateAllowedNumber?listSize=@ViewBag.filteredIngredients.Count&allowedNumber=@allowedNumber'"><span class="glyphicon glyphicon-chevron-down"></span>Afficher d'avantage</button>
 
                                     }
-                                 </div>
+                                </div>
                             </div>
                         }
                     }
@@ -190,78 +197,29 @@
                     {
                         if (allowedNumber < Model.Count())
                         {
-                            var diff = Model.Count() - allowedNumber;       
+                            var diff = Model.Count() - allowedNumber;
                             <div class="row showmore">
                                 <div class="col-xs-12">
                                     @if (diff < 4)
                                     {
 
-                                        <button type="button" class="btn btn_color1" onclick="@allowedNumber+=@diff"><span class="glyphicon glyphicon-chevron-down"></span>Afficher d'avantage</button>
+                                        <button type="button" class="btn btn_color1" onclick="location.href='Ingredient/UpdateAllowedNumber?listSize=@Model.Count()&allowedNumber=@allowedNumber'"><span class="glyphicon glyphicon-chevron-down"></span>Afficher d'avantage</button>
 
                                     }
                                     else
                                     {
-                                        <button type="button" class="btn btn_color1" onclick="@allowedNumber+=4"><span class="glyphicon glyphicon-chevron-down"></span>Afficher d'avantage</button>
+                                        <button type="button" class="btn btn_color1" onclick="location.href='Ingredient/UpdateAllowedNumber?listSize=@Model.Count()&allowedNumber=@allowedNumber'"><span class="glyphicon glyphicon-chevron-down"></span>Afficher d'avantage</button>
 
                                     }
                                 </div>
                             </div>
-                       
+
+                        }
                     }
-                    }
-                   
+
                 }
-                
+
             </div>
         </div>
     </div>
 </div>
-@section Scripts {
-    <script>
-
-        window.onbeforeunload = function () {
-
-            var ingName = $("#ingredients").val();
-            localStorage.setItem("ingredientsName", $("#ingredients").val());
-            var minCalorieValue = $("#minCalorieValue").val();
-            localStorage.setItem("minCalorieValue", $("#minCalorieValue").val());
-            var maxCalorieValue = $("#maxCalorieValue").val();
-            localStorage.setItem("maxCalorieValue", $("#maxCalorieValue").val());
-        }
-
-        window.onload = function () {
-            var name = localStorage.getItem("recetteSubName");
-            if (name !== null) $("#recetteName").val(name);
-            var ingName = localStorage.getItem("ingredientsName");
-            if (ingName !== null) $("#ingredients").val(ingName);
-            var minCalorieValue = localStorage.getItem("minCalorieValue");
-            if (minCalorieValue !== null) $("#minCalorieValue").val(minCalorieValue);
-            var maxCalorieValue = localStorage.getItem("maxCalorieValue");
-            if (maxCalorieValue !== null) $("#maxCalorieValue").val(maxCalorieValue);
-        }
-        function showMore(listSize) {
-            var allowedNumber = @allowedNumber;
-            if (allowedNumber<listSize && (listSize-allowedNumber)>5) {
-                
-            }
-        }
-        function getFilteredIngredients() {
-            var minCalorieValue = $("#minCalorieValue").val();      
-            var maxCalorieValue = $("#maxCalorieValue").val();           
-            var subIngName = $("#ingName").val();
-            var categorie = $("#Categories").val();
-            var i = 10;
-            $.ajax({
-                url: '/Ingredient/getFilteredIngredients/',
-                type: "POST",
-                dataType: "JSON",
-                data: { subIngName: subIngName, categorieId: categorie, minCalorieValue: minCalorieValue, maxCalorieValue: maxCalorieValue },
-                success: function (ingredients) {
-                    alert("ça marche..");
-                    window.location.reload();
-                }
-            });
-
-        }
-    </script>
-}
