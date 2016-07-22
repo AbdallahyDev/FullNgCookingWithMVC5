@@ -27,17 +27,20 @@ namespace FullNgCookingWithMVC5.Controllers
         private Recette _recette = new Recette();
         private IEnumerable<Ingredient> ingredintsList = new HashSet<Ingredient>();
         private List<Recette> filtredRecette = new List<Recette>();
+        public RecetteController(NgCookingDbContext db)
+        {
+            this.db = db;               
+            _ngCookingServices = new NgCookingServices(db);        
+        }
         public RecetteController()
         {
-            _ngCookingServices = new NgCookingServices(db);
+
         }
         // GET: Recette
         public ActionResult Index()
         {
             System.Web.HttpContext.Current.Session["recetteIngs"] = new HashSet<Ingredient>();
             ViewBag.filtredRecette = (List<Recette>)System.Web.HttpContext.Current.Session["filtredRecette"];
-            //A rajouter dans create get
-            TempData["RecetteIngredientsList"] = ingredintsList;
             return View(db.Recettes.ToList());
         }
 
@@ -146,7 +149,7 @@ namespace FullNgCookingWithMVC5.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var idRecette = id;
-            Recette recette = db.Recettes.Include(a => a.Ingredients).FirstOrDefault(a => a.Id == id);
+            Recette recette = db.Recettes.FirstOrDefault(a => a.Id == id);
             if (recette == null)
             {
                 return HttpNotFound();

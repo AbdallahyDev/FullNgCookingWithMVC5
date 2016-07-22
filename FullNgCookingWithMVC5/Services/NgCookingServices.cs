@@ -34,7 +34,7 @@ namespace FullNgCookingWithMVC5.Services
                     res = _cntx.Comments.Single(x => x.Id == id);
                     break;
                 case "Recette":
-                    res = _cntx.Recettes.Single(x => x.Id.Equals(id.ToString()));
+                    res = _cntx.Recettes.Single(x => x.Id.Equals(id));
                     break;
                 case "Ingredient":
                     res = _cntx.Ingredients.Single(x => x.Id == id);

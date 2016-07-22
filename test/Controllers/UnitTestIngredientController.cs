@@ -1,16 +1,14 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Models.Recettes;
 
-namespace test
+namespace test.Controllers
 {
     [TestClass]
-    public class UnitTest1
+    public class UnitTestIngredientController
     {
         [TestMethod]
-        public void getRecette()
+        public void TestMethod1()
         {
-            Recette recette;     
         }
     }
 }

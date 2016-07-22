@@ -10,7 +10,7 @@ namespace FullNgCookingWithMVC5.Models
 {
     public class NgCookingDbContext : IdentityDbContext<NgCookingUser>
     {
-        public DbSet<Recette> Recettes { get; set; }
+        public virtual DbSet<Recette> Recettes { get; set; }
         public DbSet<Comment> Comments { get; set; }  
         public DbSet<Ingredient> Ingredients { get; set; } 
         public DbSet<Category> Categories { get; set; }  
