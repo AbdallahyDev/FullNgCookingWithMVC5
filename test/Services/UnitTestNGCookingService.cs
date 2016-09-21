@@ -29,13 +29,13 @@ namespace test.Services
 
         }
         [TestMethod]
-        public void TestMethodFindById()
+        public void TestFindRecetteByIdAction()
         {
             var recette = ngCookingService.FindById(1, "Recette");
             Assert.AreEqual("aaaa",((Recette)recette).Name);  
         }
         [TestMethod]
-        public void TestMethodgetRecettesByUserId()
+        public void TestGetRecettesByUserIdAction()
         {
             var recette = ngCookingService.getRecettesByUserId("gggg");
             var firstRecette = recette.First();

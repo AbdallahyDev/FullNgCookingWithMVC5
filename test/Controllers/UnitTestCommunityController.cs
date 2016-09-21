@@ -7,7 +7,7 @@ namespace test.Controllers
     public class UnitTestCommunityController
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestAddCommunityAction()
         {
         }   
     }

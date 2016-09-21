@@ -7,7 +7,7 @@ namespace test.Controllers
     public class UnitTestIngredientController
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestAddRecetteAction()
         {
         }
     }
