@@ -21,13 +21,13 @@ namespace test
         {
             data = MoqStart.getRecetteData(); 
             var mockNgContext = new Mock<NgCookingDbContext>();
-            var mockSet = new Mock<DbSet<Recette>>();
-            mockSet.As<IQueryable<Recette>>().Setup(m => m.Provider).Returns(data.Provider);
+            var mockSet = new Mock<DbSet<Recette>>();   
+            mockSet.As<IQueryable<Recette>>().Setup(m => m.Provider).Returns(data.Provider);    
             mockSet.As<IQueryable<Recette>>().Setup(m => m.Expression).Returns(data.Expression);
             mockSet.As<IQueryable<Recette>>().Setup(m => m.ElementType).Returns(data.ElementType);
-            mockSet.As<IQueryable<Recette>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
-            mockNgContext.Setup(context => context.Recettes).Returns(mockSet.Object);
-            recetteCntrl = new RecetteController(mockNgContext.Object); 
+            mockSet.As<IQueryable<Recette>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());    
+            mockNgContext.Setup(context => context.Recettes).Returns(mockSet.Object);       
+            recetteCntrl = new RecetteController(mockNgContext.Object);             
         }
 
 
