@@ -18,7 +18,7 @@ namespace Models.Repositories
 
             DbContext = dbcontext; 
             DbSet = DbContext.Set<T>();
-
+              
         }
         public void Add(T entity)
         {
@@ -45,7 +45,6 @@ namespace Models.Repositories
             IQueryable<T> query = DbSet;
             return query.ToList(); 
         }
-
         public T GetById(int id)
         {
             return DbSet.Find(id); 
