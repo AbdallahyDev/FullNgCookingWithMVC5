@@ -30,11 +30,11 @@ namespace FullNgCookingWithMVC5.Controllers
         public RecetteController(NgCookingDbContext db)
         {
             this.db = db;               
-            _ngCookingServices = new NgCookingServices(db);        
+            _ngCookingServices = new NgCookingServices(db);         
         }
         public RecetteController()
         {
-
+            _ngCookingServices = new NgCookingServices(db); 
         }
         // GET: Recette
         public ActionResult Index()

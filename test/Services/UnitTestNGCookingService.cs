@@ -16,8 +16,7 @@ namespace test.Services
         NgCookingServices ngCookingService;
         public UnitTestNGCookingService()
         {
-            
-            var data = MoqStart.getRecetteData();
+            var data = MoqStart.getRecetteData();   
             var mockNgContext = new Mock<NgCookingDbContext>();
             var mockSet = new Mock<DbSet<Recette>>();
             mockSet.As<IQueryable<Recette>>().Setup(m => m.Provider).Returns(data.Provider);
@@ -26,8 +25,8 @@ namespace test.Services
             mockSet.As<IQueryable<Recette>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
             mockNgContext.Setup(context => context.Recettes).Returns(mockSet.Object);
             ngCookingService = new NgCookingServices(mockNgContext.Object);
-
         }
+
         [TestMethod]
         public void TestFindRecetteByIdAction()
         {
@@ -37,9 +36,9 @@ namespace test.Services
         [TestMethod]
         public void TestGetRecettesByUserIdAction()
         {
-            var recette = ngCookingService.getRecettesByUserId("gggg");
+            var recette = ngCookingService.getRecettesByUserId("gggg"); 
             var firstRecette = recette.First();
-            Assert.AreEqual("aaaa", ((Recette)firstRecette).Name);      
+            Assert.AreEqual("aaaa", ((Recette)firstRecette).Name);              
         }
     }
 }
