@@ -11,6 +11,26 @@ using System.Web;
 
 namespace FullNgCookingWithMVC5.Services
 {
+    //public class FilterConditions {
+    //    public IQueryable query;
+    //}
+
+    //public static class LoadFilters {
+    //    public static Dictionary<string, FilterConditions> LoadFindByIdCondition(NgCookingDbContext _cntx,int Id) {
+
+    //        IQueryable query_singleUser =  Queryable.Select(
+    //                                                          _cntx.Users,
+    //                                                          cust => cust.Id == Id.ToString());
+
+
+
+    //        Dictionary <string, FilterConditions> s = new Dictionary<string, FilterConditions>();
+    //        s.Add("Communaute", new FilterConditions() { query = query_singleUser });
+    //        //s.Add("Comment", new FilterConditions() { query = "_cntx.Comments.Single(x => x.Id == myid)" });
+
+    //        return s;
+    //       }
+    //}
     public class NgCookingServices
     {
         private NgCookingDbContext _cntx;
@@ -25,7 +45,9 @@ namespace FullNgCookingWithMVC5.Services
         public Object FindById(int id, string tableName)
         {
             object res = null;
-            switch (tableName)
+            
+
+        switch (tableName)
             {
                 case "Communaute":
                     res = _cntx.Users.Single(x => x.Id == id.ToString());
@@ -127,7 +149,6 @@ namespace FullNgCookingWithMVC5.Services
                         res = _cntx.Ingredients.Where(x => x.Calories < maxCalorieValue && x.Calories > minCalorieValue &&
                          x.Category.ToLower().Contains(categorie.Name.ToLower())).ToList();
                     }
-
                 }
             }
             return res;
@@ -198,7 +219,8 @@ namespace FullNgCookingWithMVC5.Services
         {
            List<Recette> results = null ;
             List<Recette> recettesWithComment;  
-            List<Recette> recettesWithoutComment;   
+            List<Recette> recettesWithoutComment;
+
             try
             {
                 switch (orderBy)            
@@ -284,7 +306,6 @@ namespace FullNgCookingWithMVC5.Services
 
         public IQueryable<Recette> GetNewRecettes()
         {
-
             var results = _cntx.Recettes.OrderByDescending(r => r.CreationDate);
             return results;
         }
