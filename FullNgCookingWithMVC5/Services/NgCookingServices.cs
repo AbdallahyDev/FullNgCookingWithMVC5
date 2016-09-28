@@ -179,7 +179,7 @@ namespace FullNgCookingWithMVC5.Services
 
         }
         public List<Recette> getFilteredRecettes(string subName, string ingsName, float minCalorieValue, float maxCalorieValue, string orderBy)
-        {
+        { 
             List<Recette> res;
             string[] sd = ingsName.Split(';');
             if (subName != "" && ingsName != "")
