@@ -10,5 +10,5 @@
   },
   "dependencies": {
     "EntityFramework": "6.1.3"
-  } 
+  }  
 }
