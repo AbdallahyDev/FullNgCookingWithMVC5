@@ -23,7 +23,6 @@ namespace FullNgCookingWithMVC5.Models
         {
             return new NgCookingDbContext();      
         }
-
         //public System.Data.Entity.DbSet<Models.Users.NgCookingUser> NgCookingUsers { get; set; }
     }  
 }
